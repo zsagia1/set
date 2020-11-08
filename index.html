@@ -15,11 +15,70 @@
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <p>cell1</p>
+
+          <div class="row">
+            <div class="col-6">
+              <input type="number" id="playerNumberInput" name="playerNumberInput" placeholder="Add number of Players" 
+                value="1" min="1" max="10" required>
+            </div>
+
+            <div class="col-6">
+              <div id="playerNameColumn">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="gameModeSettings">
+                <input type="radio" id="practice" name="gameMode" value="practice" checked>
+                <label for="practice">Practice</label><br>
+                <input type="radio" id="competition" name="gameMode" value="practice">
+                <label for="competition">Copetition</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="gameLevelSettings">
+                <input type="radio" id="beginner" name="gameLevel" value="beginner" checked>
+                <label for="beginner">Beginner</label><br>
+                <input type="radio" id="advanced" name="gameLevel" value="advanced">
+                <label for="advanced">Advanced</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="furtherSettings">
+                <label id="furtherSettings">Further Settings:</label><br>
+
+                <input type="checkbox" id="isSetCheckbox" name="isSetCheckbox" value="isSet">
+                <label for="isSetCheckbox">Do you want to use Show Is Set button?</label><br>
+                <input type="checkbox" id="isWhereSetCheckbox" name="isSetCheckbox" value="isWhereSet">
+                <label for="isWhereSetCheckbox">Do you want to use Show Where Set button?</label><br>
+                <input type="checkbox" id="isAutoSupplementCheckbox" name="isAutoSupplementCheckbox" value="isAutoSupplement">
+                <label for="isAutoSupplementCheckbox">Do you want to use Auto Supplement button?</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="startButton">
+                <button type="button">Start Game</button>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="col-6">
           <img src="SetGameImage.jpg" alt="This is an image about cards of the Set boardgame." width="450" height="450">
         </div>
+
       </div>
     </div>
 
