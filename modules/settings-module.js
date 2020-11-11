@@ -32,38 +32,59 @@ const Settings = function() {
         });
     };
 
-    let = maintainGameModeSettings = function() {
+    let maintainGameModeSettings = function() {
 
         //gamemode container
         const gameModeSettings = document.querySelector('#gameModeSettings');
         
         //input array for get the value of default
         let gameModeRadioButtonsArray = gameModeSettings.getElementsByTagName('input');
-        let gameModeInputValue;
 
         //get the value by default
-        function getValueForGameModeByDefault(array, inputValue) {
+        function getValueForGameModeByDefault(array) {
             for(let i = 0; i < array.length; i++) {
                 if(array[i].hasAttribute('checked') == true) {
-                    inputValue = array[i].value;
+                    gameModeInputValue = array[i].value;
                 }
             };
-            return inputValue;
+            return gameModeInputValue;
         };
 
         //get the value by change
-        function getValueForGameModeByChange(targetValue, inputValue) {
-            inputValue = targetValue;
-        }
+        function getValueForGameModeByChange(targetValue) {
+            return gameModeInputValue = targetValue;
+        };
 
-        getValueForGameModeByDefault(gameModeRadioButtonsArray, gameModeInputValue);
+        getValueForGameModeByDefault(gameModeRadioButtonsArray);
         gameModeSettings.addEventListener('change', function(event) {
-            getValueForGameModeByChange(event.target.value, gameModeInputValue);
+            getValueForGameModeByChange(event.target.value);
+            console.log(gameModeInputValue);
         });
-        console.log(gameModeInputValue);
+        return gameModeInputValue;
     };
+
+/*
+    let maintainGameLevelSettings = function() {
+
+        //gamelevel container
+        const gameLevelSettings = document.querySelector('#gameLevelSettings');
+
+        //get the value by change
+        function getValueForGameLevelByChange(targetValue) {
+            return gameLevelInputValue = targetValue;
+        };
+
+        gameLevelSettings.addEventListener('change', function(event) {
+            getValueForGameLevelByChange(event.target.value);
+            console.log(gameLevelInputValue);
+        });
+
+    };
+*/
 
     maintainPlayerNameInputs();
     maintainGameModeSettings();
+    console.log(gameModeInputValue);
+    //maintainGameLevelSettings();
 };
 
