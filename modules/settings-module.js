@@ -114,5 +114,6 @@ const Settings = function() {
     maintainPlayerNameInputs();
     maintainGameModeSettings();
     maintainGameLevelSettings();
+    maintainFurtherSettings();
 };
 
