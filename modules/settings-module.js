@@ -58,12 +58,10 @@ const Settings = function() {
         getValueForGameModeByDefault(gameModeRadioButtonsArray);
         gameModeSettings.addEventListener('change', function(event) {
             getValueForGameModeByChange(event.target.value);
-            console.log(gameModeInputValue);
         });
         return gameModeInputValue;
     };
 
-/*
     let maintainGameLevelSettings = function() {
 
         //gamelevel container
@@ -76,15 +74,45 @@ const Settings = function() {
 
         gameLevelSettings.addEventListener('change', function(event) {
             getValueForGameLevelByChange(event.target.value);
-            console.log(gameLevelInputValue);
         });
 
     };
-*/
+
+    let maintainFurtherSettings = function() {
+
+        let isSetCheckbox = document.querySelector('input[name=isSetCheckbox]');
+        let isWhereSetCheckbox = document.querySelector('input[name=isWhereSetCheckbox]');
+        let isAutoSupplementCheckbox = document.querySelector('input[name=isAutoSupplementCheckbox]');
+
+        isSetCheckbox.addEventListener('change', function() {
+            if(this.checked) {
+                return isSetValue = true;
+            } else {
+                return isSetValue = false;
+            }
+        });
+
+        isWhereSetCheckbox.addEventListener('change', function() {
+            if(this.checked) {
+                return isWhereSetValue = true;
+            } else {
+                return isWhereSetValue = false;
+            }
+        });
+
+        isAutoSupplementCheckbox.addEventListener('change', function() {
+            if(this.checked) {
+                return isAutoSupplementValue = true;
+            } else {
+                return isAutoSupplementValue = false;
+            }
+        });
+    };
+
+
 
     maintainPlayerNameInputs();
     maintainGameModeSettings();
-    console.log(gameModeInputValue);
-    //maintainGameLevelSettings();
+    maintainGameLevelSettings();
 };
 
