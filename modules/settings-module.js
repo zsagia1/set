@@ -24,11 +24,11 @@ const Settings = function() {
 
     this.init = function() {
         template.playerNumberElement.setAttribute('value', defaultSettings.defaultPlayerNumber);
-        template.playerNumberElement.addEvenetListener('change', function(event) {
+        template.playerNumberElement.addEventListener('change', function(event) {
             this.maintainPlayerNameInputs(event.target.value, template.playerInputsContainer);
         });
 
-        template.gameModesElement.addEvenetListener('change', function(event) {
+        template.gameModesElement.addEventListener('change', function(event) {
             if(event.target.value === 'competition') {
                 template.isSetCheckboxElement.setAttribute('disabled', 'disabled');
                 template.isSetCheckboxElement.removeAttribute('checked');
