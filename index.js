@@ -5,9 +5,8 @@ const defaultSettings = {
 const template = new Template();
 const settings = new Settings();
 
-const startGame = function() {
+const start = function() {
     const config = settings.createConfig();
+
+    template.changeAreas();
 };
-
-startGame();
-
