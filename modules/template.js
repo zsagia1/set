@@ -9,6 +9,7 @@ const Template = function() {
     this.isAutoSupplementCheckboxElement = null;
     this.gameSettingsDivElement = null;
     this.gameAreaDivElement = null;
+    this.gameAreaContainer = null;
     
     
     this.playerInputsContainer = document.querySelector(PLAYER_INPUTS_ID);
@@ -20,9 +21,14 @@ const Template = function() {
     this.isAutoSupplementCheckboxElement = document.querySelector(IS_AUTO_SUPPLEMENT_CHECKBOX_ID);
     this.gameSettingsDivElement = document.querySelector(GAME_SETTINGS_DIV_ID);
     this.gameAreaDivElement = document.querySelector(GAME_AREA_DIV_ID);
+    this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
     
     this.changeAreas = function() {
         this.gameSettingsDivElement.classList.toggle('d-none');
         this.gameAreaDivElement.classList.toggle('d-none');
+    };
+
+    this.createGameAreaContainer = function() {
+        this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
     };
 };

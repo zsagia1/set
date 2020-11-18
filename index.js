@@ -4,9 +4,12 @@ const defaultSettings = {
 
 const template = new Template();
 const settings = new Settings();
+const gameEngine = new GameEngine();
 
 const start = function() {
     const config = settings.createConfig();
 
     template.changeAreas();
+
+    
 };
