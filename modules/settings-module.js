@@ -46,6 +46,17 @@ const Settings = function() {
         });
     };
 
+    this.createConfig = () => (
+        new Config(
+            this.getPlayers(),
+            this.getGameMode(),
+            this.getGameLevel(),
+            this.isSetButton(),
+            this.isWhereSetButton(),
+            this.isAutoSupplementButton()
+        )
+    );
+
     this.getPlayers = function () {
         var playerInputs = template.playerInputsContainer.getElementsByTagName("input");
 
