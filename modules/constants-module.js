@@ -1,6 +1,6 @@
+const CARD_NUMBERS = [1, 2, 3];
 const CARD_COLORS = ['g', 'r', 'p'];
 const CARD_CONTENTS = ['S', 'O', 'H'];
-const CARD_NUMBERS = [1, 2, 3];
 const CARD_SHAPES = ['D', 'S', 'P'];
 
 
