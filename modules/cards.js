@@ -1,4 +1,4 @@
-let Card = function(number, content, color, shape) {
+var Card = function(number, content, color, shape) {
     this.number = number;
     this.content = content;
     this.color = color;

@@ -1,8 +1,12 @@
-var Deck = function(gameLevel) {
+var Deck = function(gameLevel, setSize) {
     this.cards = [];
 
     this.isEmpty = function() {
         return !!this.cards.length;
+    };
+
+    this.getDeckSize = function() {
+        return this.cards.length;
     };
 
     this.createCards = function() {
@@ -28,16 +32,43 @@ var Deck = function(gameLevel) {
             );
         }
 
-        console.log(cards);
+        return cards;
     };
 
-    this.getDeckSize = function() {
-        return this.cards.length;
+    this.shuffleDeck = function(cards) {
+        var randomCards = [];
+        var pieceOfCards = cards.length;
+        var i;
+
+        while(pieceOfCards) {
+            i = Math.floor(Math.random() * cards.length);
+
+            if(i in cards) {
+                randomCards.push(cards[i]);
+                delete cards[i];
+                n--;
+            }
+        }
+
+        return randomCards;
     };
 
     this.logOutDeck = function() {
-            console.log(this.cards);
+        console.log(this.cards);
     };
-    this.createCards();
 
+    this.handOutDeck = function(cardNumber) {
+        return this.cards.splice(0, cardNumber);
+    };
+
+    this.handOutNumber = setSize;
+
+    this.init = function () {
+        this.cards = this.createCards();
+        this.cards = this.shuffling(this.cards);
+    
+        this.logOutDeck();
+      };
+
+    this.init();
 };
