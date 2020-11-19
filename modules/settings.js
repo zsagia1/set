@@ -2,12 +2,12 @@ const Settings = function() {
 
     this.maintainPlayerNameInputs = function(playerNumber, playerInputsContainer) {
 
-        var playerInputs = template.playerInputsContainer.getElementsByTagName('input');
+        var playerInputs = playerInputsContainer.getElementsByTagName('input');
 
             if(playerInputs.length > playerNumber) {
                 while(playerInputs.length > playerNumber) {
-                    template.playerInputsContainer.removeChild(
-                        template.playerInputsContainer.childNodes[playerInputs.length]
+                    playerInputsContainer.removeChild(
+                        playerInputsContainer.childNodes[playerInputs.length]
                     );
                 }
             } else if(playerInputs.length < playerNumber) {
@@ -17,14 +17,15 @@ const Settings = function() {
                     x.setAttribute('type', 'text');
                     x.setAttribute('value', 'Player' + (playerInputs.length + 1));
 
-                    template.playerInputsContainer.appendChild(x);
+                    playerInputsContainer.appendChild(x);
                 }
             }
     };
 
     this.init = function() {
         template.playerNumberElement.setAttribute('value', defaultSettings.defaultPlayerNumber);
-        template.playerNumberElement.addEventListener('change', function(event) {
+
+        template.playerNumberElement.addEventListener('change', (event) => {
             this.maintainPlayerNameInputs(event.target.value, template.playerInputsContainer);
         });
 
