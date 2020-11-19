@@ -1,4 +1,4 @@
-var Deck = function(gameLevel, setSize) {
+var Deck = function(gameLevel) {
     this.cards = [];
 
     this.isEmpty = function() {
@@ -60,8 +60,6 @@ var Deck = function(gameLevel, setSize) {
     this.handOutDeck = function(cardNumber) {
         return this.cards.splice(0, cardNumber);
     };
-
-    this.handOutNumber = setSize;
 
     this.init = function () {
         this.cards = this.createCards();
