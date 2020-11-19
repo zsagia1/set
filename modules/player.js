@@ -1,3 +1,3 @@
-let Player = function(name) {
+var Player = function(name) {
     this.name = name;
 };
