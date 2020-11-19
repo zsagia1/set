@@ -10,6 +10,7 @@ const Template = function() {
     this.gameSettingsDivElement = null;
     this.gameAreaDivElement = null;
     this.gameAreaContainer = null;
+    this.gameAreaHeaderElement = null;
     
     
     this.playerInputsContainer = document.querySelector(PLAYER_INPUTS_ID);
@@ -22,10 +23,25 @@ const Template = function() {
     this.gameSettingsDivElement = document.querySelector(GAME_SETTINGS_DIV_ID);
     this.gameAreaDivElement = document.querySelector(GAME_AREA_DIV_ID);
     this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
+    this.gameAreaHeaderElement = document.querySelector(GAME_AREA_HEADER_ID);
     
     this.changeAreas = function() {
         this.gameSettingsDivElement.classList.toggle('d-none');
         this.gameAreaDivElement.classList.toggle('d-none');
+    };
+
+    this.createHeaderButtons = function(isSetButton) {
+        if(isSetButton) {
+            const isSetButtonElement = document.createElement('button');
+
+            isSetButtonElement.innerHTML = 'Is there Set?';
+            isSetButtonElement.type = 'button';
+            isSetButtonElement.classList.add('btn');
+            isSetButtonElement.classList.add('btn-secondary');
+            isSetButtonElement.classList.add('mr-1');
+
+            this.gameAreaHeaderElement.appendChild(isSetButtonElement);
+        }
     };
 
     this.createGameAreaContainer = function() {

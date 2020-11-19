@@ -14,4 +14,5 @@ const GAME_LEVELS_ID = '#gameLevels';
 const GAME_SETTINGS_DIV_ID = '#gameSettingsDiv';
 const GAME_AREA_DIV_ID = '#gameAreaDiv';
 const GAME_AREA_CONTAINER_ID = '#gameArea';
+const GAME_AREA_HEADER_ID = '#gameAreaHeader';
 

@@ -8,11 +8,14 @@ const GameEngine = function() {
     };
 
     this.startGame = function(config) {
+        
+        template.createHeaderButtons(config.isSetButton);
+
         this.deck = new Deck(config.gameLevel, 3);
 
         cardsOnBoard = this.deck.handOutDeck(12);
 
-        console.log(cardsOnBoard);
+        
     };
 
     this.init();
