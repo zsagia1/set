@@ -9,7 +9,7 @@ const GameEngine = function() {
 
     this.startGame = function(config) {
         
-        template.createHeaderButtons(config.isSetButton);
+        template.createHeaderButtons(config.isSetButton, config.isWhereSetButton);
 
         this.deck = new Deck(config.gameLevel, 3);
 

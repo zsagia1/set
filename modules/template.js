@@ -30,8 +30,8 @@ const Template = function() {
         this.gameAreaDivElement.classList.toggle('d-none');
     };
 
-    this.createHeaderButtons = function(isSetButton) {
-        if(isSetButton) {
+    this.createHeaderButtons = function(isSetButton, isWhereSetButton) {
+        if(isSetButton == true) {
             const isSetButtonElement = document.createElement('button');
 
             isSetButtonElement.innerHTML = 'Is there Set?';
@@ -41,6 +41,18 @@ const Template = function() {
             isSetButtonElement.classList.add('mr-1');
 
             this.gameAreaHeaderElement.appendChild(isSetButtonElement);
+        }
+
+        if(isWhereSetButton == true) {
+            const isWhereSetButtonElement = document.createElement('button');
+
+            isWhereSetButtonElement.innerHTML = 'Where is the Set?';
+            isWhereSetButtonElement.type = 'button';
+            isWhereSetButtonElement.classList.add('btn');
+            isWhereSetButtonElement.classList.add('btn-secondary');
+            isWhereSetButtonElement.classList.add('mr-1');
+
+            this.gameAreaHeaderElement.appendChild(isWhereSetButtonElement);
         }
     };
 
