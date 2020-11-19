@@ -46,7 +46,7 @@ var Deck = function(gameLevel, setSize) {
             if(i in cards) {
                 randomCards.push(cards[i]);
                 delete cards[i];
-                n--;
+                pieceOfCards--;
             }
         }
 
@@ -65,7 +65,7 @@ var Deck = function(gameLevel, setSize) {
 
     this.init = function () {
         this.cards = this.createCards();
-        this.cards = this.shuffling(this.cards);
+        this.cards = this.shuffleDeck(this.cards);
     
         this.logOutDeck();
       };

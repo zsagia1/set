@@ -11,5 +11,5 @@ const start = function() {
 
     template.changeAreas();
 
-    
+    gameEngine.startGame(config);
 };
