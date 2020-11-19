@@ -30,7 +30,7 @@ const Template = function() {
         this.gameAreaDivElement.classList.toggle('d-none');
     };
 
-    this.createHeaderButtons = function(isSetButton, isWhereSetButton) {
+    this.createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
         if(isSetButton == true) {
             const isSetButtonElement = document.createElement('button');
 
@@ -53,6 +53,18 @@ const Template = function() {
             isWhereSetButtonElement.classList.add('mr-1');
 
             this.gameAreaHeaderElement.appendChild(isWhereSetButtonElement);
+        }
+
+        if(isAutoSupplementButton == true) {
+            const isAutoSupplementButtonElement = document.createElement('button');
+
+            isAutoSupplementButtonElement.innerHTML = 'Supplement the board!';
+            isAutoSupplementButtonElement.type = 'button';
+            isAutoSupplementButtonElement.classList.add('btn');
+            isAutoSupplementButtonElement.classList.add('btn-secondary');
+            isAutoSupplementButtonElement.classList.add('mr-1');
+
+            this.gameAreaHeaderElement.appendChild(isAutoSupplementButtonElement);
         }
     };
 
