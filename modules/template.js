@@ -14,6 +14,7 @@ const Template = function() {
     this.gameAreaDivElement = null;
     this.gameAreaContainer = null;
     this.gameAreaHeaderElement = null;
+    this.gamePlayersContainer = null;
     
     
     this.playerInputsContainer = document.querySelector(PLAYER_INPUTS_ID);
@@ -30,8 +31,9 @@ const Template = function() {
     this.gameAreaDivElement = document.querySelector(GAME_AREA_DIV_ID);
     this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
     this.gameAreaHeaderElement = document.querySelector(GAME_AREA_HEADER_ID);
+    this.gamePlayersContainer = document.querySelector(GAME_PLAYERS_CONTAINER_ID);
     
-    
+
     this.changeAreas = function() {
         this.gameSettingsDivElement.classList.toggle('d-none');
         this.gameAreaDivElement.classList.toggle('d-none');
@@ -77,5 +79,9 @@ const Template = function() {
 
     this.createGameAreaContainer = function() {
         this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
+    };
+
+    this.createGamePlayersContainer = function() {
+        this.gamePlayersContainer = document.querySelector(GAME_PLAYERS_CONTAINER_ID);
     };
 };

@@ -5,6 +5,7 @@ const GameEngine = function() {
 
     this.init = function() {
         template.createGameAreaContainer();
+        template.createGamePlayersContainer();
     };
 
     this.startGame = function(config) {
@@ -14,7 +15,6 @@ const GameEngine = function() {
         this.deck = new Deck(config.gameLevel, 3);
 
         cardsOnBoard = this.deck.handOutDeck(12);
-
         
     };
 
