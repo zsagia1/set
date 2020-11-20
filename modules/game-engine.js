@@ -72,6 +72,20 @@ const GameEngine = function() {
         }
     };
 
+    const findSet = function(cardsMap) {
+        const correctSets = [];
+
+        Array.from(cardsMap.values()).forEach((cards) => {
+            console.log(cards);
+
+            if(checkSetOnCards == true) {
+                correctSets.push(cards);
+            }
+        });
+
+        return correctSets;
+    };
+
     const createGamePlayers = function(playerNames) {
         const players = playerNames.map((playerName) => new Player(playerName));
         const playerElements = [];
