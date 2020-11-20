@@ -59,10 +59,10 @@ const Settings = function() {
     );
 
     this.getPlayers = function () {
-        var playerInputs = template.playerInputsContainer.getElementsByTagName("input");
+        var playerInputs = template.playerInputsContainer.getElementsByTagName('input');
 
         return Array.from(playerInputs).map(
-            (playerInput) => new Player(playerInput.value)
+            (playerInput) => playerInput.value
         );
     };
 
