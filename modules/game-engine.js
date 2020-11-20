@@ -47,6 +47,18 @@ const GameEngine = function() {
         return threeCards;
     };
 
+    const equalOrDifferent = function(values) {
+        return (
+                (values[0] === values[1] &&
+                values[0] === values[2] &&
+                values[1] === values[2]) 
+                ||
+                (values[0] !== values[1] &&
+                values[0] !== values[2] &&
+                values[1] !== values[2])
+        );
+    };
+
     const createGamePlayers = function(playerNames) {
         const players = playerNames.map((playerName) => new Player(playerName));
         const playerElements = [];
