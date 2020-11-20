@@ -59,6 +59,19 @@ const GameEngine = function() {
         );
     };
 
+    const checkSetOnCards = function(cards) {
+        if(
+            equalOrDifferent([cards[0].number, cards[1].number, cards[2].number]) &&
+            equalOrDifferent([cards[0].content, cards[1].content, cards[2].content]) &&
+            equalOrDifferent([cards[0].color, cards[1].color, cards[2].color]) &&
+            equalOrDifferent([cards[0].shape, cards[1].shape, cards[2].shape])
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     const createGamePlayers = function(playerNames) {
         const players = playerNames.map((playerName) => new Player(playerName));
         const playerElements = [];
