@@ -3,6 +3,7 @@ const GameEngine = function() {
 
     let cardsOnBoard = null;
     let selectedPlayerContainer = null;
+    
 
     this.init = function() {
         template.createGameAreaContainer();
@@ -20,6 +21,30 @@ const GameEngine = function() {
         cardsOnBoard = this.deck.handOutDeck(12);
 
         maintainGameAreaContainer();
+    };
+
+    const generateThreeCardsArray = function(cards) {
+        const threeCards = new Map();
+
+        cards.forEach((card1) =>
+            cards.forEach((card2) =>
+                cards.forEach((card3) => {
+                    if(card1 !== card2 && card1 !==card3 && card2 !==card3) {
+                        const selectedCards = [card1, card2, card3];
+                        const sortedSelectedCards = selectedCards.sort((c1, c2) => {
+                            c1.name < c2.name ? 1 : -1
+                        });
+                        const name = sortedSelectedCards.map((c) => c.name).join('-');
+
+                        threeCards.set(name, selectedCards);
+                    }
+                })
+            )
+        );
+
+        console.log(threeCards);
+
+        return threeCards;
     };
 
     const createGamePlayers = function(playerNames) {
@@ -64,7 +89,7 @@ const GameEngine = function() {
             template.gameAreaContainer.appendChild(cardElement);
         });
 
-
+        generateThreeCardsArray(Array.from(cardsOnBoard));
     };
 
     this.init();
