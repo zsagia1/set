@@ -49,22 +49,22 @@ const GameEngine = function() {
 
     const equalOrDifferent = function(values) {
         return (
-                (values[0] === values[1] &&
-                values[0] === values[2] &&
-                values[1] === values[2]) 
+                (values[0]  === values[1] &&
+                values[0]   === values[2] &&
+                values[1]   === values[2]) 
                 ||
-                (values[0] !== values[1] &&
-                values[0] !== values[2] &&
-                values[1] !== values[2])
+                (values[0]  !== values[1] &&
+                values[0]   !== values[2] &&
+                values[1]   !== values[2])
         );
     };
 
     const checkSetOnCards = function(cards) {
         if(
-            equalOrDifferent([cards[0].number, cards[1].number, cards[2].number]) &&
-            equalOrDifferent([cards[0].content, cards[1].content, cards[2].content]) &&
-            equalOrDifferent([cards[0].color, cards[1].color, cards[2].color]) &&
-            equalOrDifferent([cards[0].shape, cards[1].shape, cards[2].shape])
+            equalOrDifferent([cards[0].number,  cards[1].number,    cards[2].number])   &&
+            equalOrDifferent([cards[0].content, cards[1].content,   cards[2].content])  &&
+            equalOrDifferent([cards[0].color,   cards[1].color,     cards[2].color])    &&
+            equalOrDifferent([cards[0].shape,   cards[1].shape,     cards[2].shape])
         ) {
             return true;
         } else {
@@ -82,7 +82,6 @@ const GameEngine = function() {
                 correctSets.push(cards);
             }
         });
-
         return correctSets;
     };
 
@@ -99,11 +98,11 @@ const GameEngine = function() {
             console.log(player);
 
             playerContainer.innerHTML = 
-                '<div class="col-sm-4 name">' + player.name + '</div>' +
-                '<div class="col-sm-2 attempts">' + player.attempts + '</div>' +
-                '<div class="col-sm-2 corrects">' + player.corrects + '</div>' +
-                '<div class="col-sm-2 fails">' + player.fails + '</div>' +
-                '<div class="col-sm-2 points">' + player.points + '</div>';
+                '<div class="col-sm-4 name">'       + player.name       + '</div>' +
+                '<div class="col-sm-2 attempts">'   + player.attempts   + '</div>' +
+                '<div class="col-sm-2 corrects">'   + player.corrects   + '</div>' +
+                '<div class="col-sm-2 fails">'      + player.fails      + '</div>' +
+                '<div class="col-sm-2 points">'     + player.points     + '</div>';
 
             playerElements.push(playerContainer);
 
@@ -128,7 +127,7 @@ const GameEngine = function() {
             template.gameAreaContainer.appendChild(cardElement);
         });
 
-        generateThreeCardsArray(Array.from(cardsOnBoard));
+        findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
     };
 
     this.init();
