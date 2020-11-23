@@ -2,7 +2,8 @@ const GameEngine = function() {
     this.deck = null;
 
     let cardsOnBoard = null;
-    let selectedPlayerContainer = null;
+    let currentSets = [];
+
     
 
     this.init = function() {
@@ -12,7 +13,7 @@ const GameEngine = function() {
 
     this.startGame = function(config) {
         
-        template.createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
+        createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
 
         createGamePlayers(config.playerNames);
 
@@ -127,7 +128,12 @@ const GameEngine = function() {
             template.gameAreaContainer.appendChild(cardElement);
         });
 
-        findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+        currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+    };
+
+    const createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
+
+        template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
     };
 
     this.init();

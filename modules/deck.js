@@ -36,8 +36,8 @@ var Deck = function(gameLevel) {
     };
 
     this.shuffleDeck = function(cards) {
-        var randomCards = [];
-        var pieceOfCards = cards.length;
+        var randomCards     = [];
+        var pieceOfCards    = cards.length;
         var i;
 
         while(pieceOfCards) {

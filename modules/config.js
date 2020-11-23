@@ -1,15 +1,15 @@
 var Config = function(
     playerNames,
-    gameMode,
     gameLevel,
+    gameMode,
+    isAutoSupplementButton,
     isSetButton,
-    isWhereSetButton,
-    isAutoSupplementButton
+    isWhereSetButton
 ) {
-    this.playerNames = playerNames || [];
-    this.gameMode = gameMode || GAME_MODES_ID;
-    this.gameLevel = gameLevel || GAME_LEVELS_ID;
-    this.isSetButton = isSetButton || false;
-    this.isWhereSetButton = isWhereSetButton || false;
+    this.playerNames            = playerNames || [];
+    this.gameLevel              = gameLevel || GAME_LEVELS_ID;
+    this.gameMode               = gameMode || GAME_MODE_PRACTICE;
     this.isAutoSupplementButton = isAutoSupplementButton || false;
+    this.isSetButton            = isSetButton || false;
+    this.isWhereSetButton       = isWhereSetButton || false;
 };
