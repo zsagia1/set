@@ -3,6 +3,8 @@ const GameEngine = function() {
 
     let cardsOnBoard = null;
     let currentSets = [];
+    let selectedCards = [];
+    let selectedPlayerContainer = null;
 
     
 
@@ -111,24 +113,49 @@ const GameEngine = function() {
         });
     };
 
-    const maintainGameAreaContainer = function() {
+    const maintainGameAreaContainer = () => {
         template.gameAreaContainer.innerHTML = "";
 
         cardsOnBoard.forEach((card) => {
-            const cardElement = document.createElement('span');
+            const cardElement = document.createElement("span");
 
-            cardElement.classList.add('card-container');
+            cardElement.classList.add("card-container");
+            cardElement.setAttribute("data-card", JSON.stringify(card));
 
-            var img = document.createElement('img');
-            img.setAttribute('width', 120);
-            img.setAttribute('src', 'images/' + card.imageURL);
-            img.setAttribute('data-card', JSON.stringify(card));
+            var img = document.createElement("img");
+
+            img.addEventListener("click", (event) => {
+                if (selectedCards.length < 3 && !!selectedPlayerContainer) {
+                    if (selectedCards.includes(card)) {
+                        selectedCards = selectedCards.filter((selectedCard) => {
+                            return selectedCard.name !== card.name;
+                        });
+
+                        img.classList.toggle("selected");
+                    } else {
+                        selectedCards.push(card);
+
+                        img.classList.toggle("selected");
+                    }
+                }
+
+                if (selectedCards.length === 3) {
+                    this.checkButtonElement.removeAttribute("disabled");
+                }
+
+                console.log("Selected Cards: ", selectedCards);
+            });
+
+            img.setAttribute("width", 120);
+            img.setAttribute("src", "images/" + card.imageURL);
+            img.setAttribute("data-card", JSON.stringify(card));
 
             cardElement.appendChild(img);
-            template.gameAreaContainer.appendChild(cardElement);
-        });
 
-        currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+            template.gameAreaContainer.appendChild(cardElement);
+
+            currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+        });
     };
 
     const createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
