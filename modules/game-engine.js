@@ -3,6 +3,7 @@ const GameEngine = function() {
 
     let cardsOnBoard = null;
     let currentSets = [];
+    let playersMap = new Map();
     let selectedCards = [];
     let selectedPlayerContainer = null;
 
@@ -14,10 +15,11 @@ const GameEngine = function() {
     };
 
     this.startGame = function(config) {
+        createCheckButtonElement();
         
         createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
 
-        createGamePlayers(config.playerNames);
+        createGamePlayers(config.playerNames, template.gamePlayersContainer);
 
         this.deck = new Deck(config.gameLevel);
 
@@ -88,8 +90,48 @@ const GameEngine = function() {
         return correctSets;
     };
 
-    const createGamePlayers = function(playerNames) {
-        const players = playerNames.map((playerName) => new Player(playerName));
+    const checkSelectedCardsForSet = function() {
+        return currentSets.reduce((isSet, currentCards) => {
+            if(
+                currentCards.includes(selectedCards[0]) &&
+                currentCards.includes(selectedCards[1]) &&
+                currentCards.includes(selectedCards[2])
+            ) {
+                isSet = true;
+            }
+            return isSet;
+        }, false);
+    };
+
+    const createCheckButtonElement = function() {
+        this.checkButtonElement = document.createElement('button');
+
+        this.checkButtonElement.innerHTML = 'CHECK';
+        this.checkButtonElement.setAttribute('enabled', 'enabled');
+        this.checkButtonElement.classList.add('btn');
+        this.checkButtonElement.classList.add('btn-primary');
+        this.checkButtonElement.classList.add('mr-1');
+
+        this.checkButtonElement.addEventListener('click', (event) => {
+            const isSet = checkSelectedCardsForSet();
+
+            if(isSet == true) {
+                selectedCards.forEach((card) => {
+                    cardsOnBoard = cardsOnBoard.filter((cardOnBoard) => {
+                        return cardOnBoard !== card;
+                    });
+                });
+
+                console.log(cardsOnBoard);
+
+                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            }
+        });
+
+        template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
+    };
+
+    const createGamePlayerList = function(players, container, isAction) {
         const playerElements = [];
 
         players.forEach((player) => {
@@ -98,7 +140,18 @@ const GameEngine = function() {
             playerContainer.classList.add('row');
             playerContainer.classList.add('player');
             playerContainer.setAttribute('data-player', JSON.stringify(player));
-            console.log(player);
+
+            if(isAction == true) {
+                playerContainer.addEventListener('click', (event) => {
+                    selectedPlayerContainer = playerContainer;
+
+                    playerElements.forEach((playerElement) => {
+                        playerElement.classList.remove('selected');
+                    });
+
+                    playerContainer.classList.add('selected');
+                });
+            }
 
             playerContainer.innerHTML = 
                 '<div class="col-sm-4 name">'       + player.name       + '</div>' +
@@ -109,8 +162,16 @@ const GameEngine = function() {
 
             playerElements.push(playerContainer);
 
-            template.gamePlayersContainer.appendChild(playerContainer);
+            container.appendChild(playerContainer);
         });
+    };
+
+    const createGamePlayers = (playerNames, container) => {
+        players = playerNames.map((playerName) => new Player(playerName));
+
+        players.forEach(player => playersMap.set(player.name, player));
+
+        createGamePlayerList(players, container, true);
     };
 
     const maintainGameAreaContainer = () => {
@@ -137,10 +198,6 @@ const GameEngine = function() {
 
                         img.classList.toggle("selected");
                     }
-                }
-
-                if (selectedCards.length === 3) {
-                    this.checkButtonElement.removeAttribute("disabled");
                 }
 
                 console.log("Selected Cards: ", selectedCards);
