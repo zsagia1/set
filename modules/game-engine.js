@@ -1,5 +1,6 @@
 const GameEngine = function() {
     this.deck = null;
+    this.checkButtonElement = null;
 
     let cardsOnBoard = null;
     let currentSets = [];
@@ -107,7 +108,7 @@ const GameEngine = function() {
         this.checkButtonElement = document.createElement('button');
 
         this.checkButtonElement.innerHTML = 'CHECK';
-        this.checkButtonElement.setAttribute('enabled', 'enabled');
+        this.checkButtonElement.setAttribute('disabled', 'disabled');
         this.checkButtonElement.classList.add('btn');
         this.checkButtonElement.classList.add('btn-primary');
         this.checkButtonElement.classList.add('mr-1');
@@ -115,7 +116,14 @@ const GameEngine = function() {
         this.checkButtonElement.addEventListener('click', (event) => {
             const isSet = checkSelectedCardsForSet();
 
-            maintainPlayer(selectedPlayerContainer, isSet);
+            handleCheckAction(isSet);
+        });
+
+        template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
+    };
+
+    const handleCheckAction = function(isSet) {
+        maintainPlayer(selectedPlayerContainer, isSet);
 
             if(isSet == true) {
                 selectedCards.forEach((card) => {
@@ -132,9 +140,6 @@ const GameEngine = function() {
             reset();
 
             maintainGameAreaContainer();
-        });
-
-        template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
     };
 
     const maintainPlayer = function(playerContainer, isSet) {
@@ -202,7 +207,7 @@ const GameEngine = function() {
         createGamePlayerList(players, container, true);
     };
 
-    const maintainGameAreaContainer = () => {
+    const maintainGameAreaContainer = function() {
         template.gameAreaContainer.innerHTML = "";
 
         cardsOnBoard.forEach((card) => {
@@ -228,6 +233,10 @@ const GameEngine = function() {
                     }
                 }
 
+                if(selectedCards.length === 3) {
+                    this.checkButtonElement.removeAttribute('disabled');
+                }
+
                 console.log("Selected Cards: ", selectedCards);
             });
 
@@ -238,9 +247,9 @@ const GameEngine = function() {
             cardElement.appendChild(img);
 
             template.gameAreaContainer.appendChild(cardElement);
-
-            currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
         });
+
+        currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));  
     };
 
     const createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
