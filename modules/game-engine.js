@@ -115,20 +115,48 @@ const GameEngine = function() {
         this.checkButtonElement.addEventListener('click', (event) => {
             const isSet = checkSelectedCardsForSet();
 
+            maintainPlayer(selectedPlayerContainer, isSet);
+
             if(isSet == true) {
                 selectedCards.forEach((card) => {
-                    cardsOnBoard = cardsOnBoard.filter((cardOnBoard) => {
-                        return cardOnBoard !== card;
-                    });
+                    cardsOnBoard = cardsOnBoard.filter(
+                        (cardOnBoard) => cardOnBoard !== card
+                    );
                 });
 
                 console.log(cardsOnBoard);
 
                 cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
             }
+
+            reset();
+
+            maintainGameAreaContainer();
         });
 
         template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
+    };
+
+    const maintainPlayer = function(playerContainer, isSet) {
+        const player = JSON.parse(playerContainer.getAttribute('data-player'));
+
+        player.attempts = player.attempts + 1;
+
+        if(isSet == true) {
+            player.corrects = player.corrects + 1;
+            player.points = player.points + 1;
+        } else {
+            player.fails = player.fails + 1;
+        }
+
+        playerContainer.querySelector('.attempts').innerHTML    = player.attempts;
+        playerContainer.querySelector('.corrects').innerHTML    = player.corrects;
+        playerContainer.querySelector('.fails').innerHTML       = player.fails;
+        playerContainer.querySelector('.points').innerHTML      = player.points;
+
+        playerContainer.setAttribute('data-player', JSON.stringify(player));
+
+        playersMap.set(player.name, player);
     };
 
     const createGamePlayerList = function(players, container, isAction) {
@@ -218,6 +246,15 @@ const GameEngine = function() {
     const createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
 
         template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
+    };
+
+    const reset = function() {
+        selectedPlayerContainer.classList.remove('selected');
+        selectedPlayerContainer = null;
+
+        this.checkButtonElement.setAttribute('disabled', 'disabled');
+
+        selectedCards = [];
     };
 
     this.init();
