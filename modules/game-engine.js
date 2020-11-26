@@ -65,6 +65,19 @@ const GameEngine = function() {
         );
     };
 
+    const findSet = function(cardsMap) {
+        const correctSets = [];
+
+        Array.from(cardsMap.values()).forEach((cards) => {
+
+            if(checkSetOnCards(cards) == true) {
+                correctSets.push(cards);
+            }
+        });
+
+        return correctSets;
+    };
+
     const checkSetOnCards = function(cards) {
         if(
             equalOrDifferent([cards[0].number,  cards[1].number,    cards[2].number])   &&
@@ -76,19 +89,6 @@ const GameEngine = function() {
         } else {
             return false;
         }
-    };
-
-    const findSet = function(cardsMap) {
-        const correctSets = [];
-
-        Array.from(cardsMap.values()).forEach((cards) => {
-            console.log(cards);
-
-            if(checkSetOnCards == true) {
-                correctSets.push(cards);
-            }
-        });
-        return correctSets;
     };
 
     const checkSelectedCardsForSet = function() {

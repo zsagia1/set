@@ -68,7 +68,7 @@ const Template = function() {
         if(isAutoSupplementButton == true) {
             const isAutoSupplementButtonElement = document.createElement('button');
 
-            isAutoSupplementButtonElement.innerHTML = 'Supplement the board!';
+            isAutoSupplementButtonElement.innerHTML = 'Supplement';
             isAutoSupplementButtonElement.type = 'button';
             isAutoSupplementButtonElement.classList.add('btn');
             isAutoSupplementButtonElement.classList.add('btn-secondary');
