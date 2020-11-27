@@ -1,4 +1,6 @@
 const Template = function() {
+    this.countdownElement = null;
+    
     this.gameAreaContainer      = null;
     this.gameAreaDivElement     = null;
     this.gameAreaHeaderElement  = null;
@@ -19,6 +21,8 @@ const Template = function() {
     this.playerNumberElement    = null;
     
     
+    this.countdownElement = document.querySelector(COUNTDOWN_ID);
+
     this.gameAreaContainer      = document.querySelector(GAME_AREA_CONTAINER_ID);
     this.gameAreaDivElement     = document.querySelector(GAME_AREA_DIV_ID);
     this.gameAreaHeaderElement  = document.querySelector(GAME_AREA_HEADER_ID);

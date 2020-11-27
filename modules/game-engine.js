@@ -3,6 +3,7 @@ const GameEngine = function() {
     this.checkButtonElement = null;
 
     let cardsOnBoard = null;
+    let currentCheckInterval = null;
     let currentSets = [];
     let playersMap = new Map();
     let selectedCards = [];
@@ -117,6 +118,8 @@ const GameEngine = function() {
         this.checkButtonElement.classList.add('mr-1');
 
         this.checkButtonElement.addEventListener('click', (event) => {
+            clearCheckInterval();
+            
             const isSet = checkSelectedCardsForSet();
 
             handleCheckAction(isSet);
@@ -145,6 +148,12 @@ const GameEngine = function() {
             reset();
 
             maintainGameAreaContainer();
+    };
+
+    const clearCheckInterval = () => {
+        clearInterval(currentCheckInterval);
+
+        template.countdownElement.innerHTML = '';
     };
 
     const maintainPlayer = (playerContainer, isSet) => {
@@ -181,6 +190,8 @@ const GameEngine = function() {
 
             if(isAction == true) {
                 playerContainer.addEventListener('click', (event) => {
+                    clearCheckInterval();
+
                     selectedPlayerContainer = playerContainer;
 
                     playerElements.forEach((playerElement) => {
@@ -188,6 +199,8 @@ const GameEngine = function() {
                     });
 
                     playerContainer.classList.add('selected');
+
+                    currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
                 });
             }
 
@@ -269,6 +282,18 @@ const GameEngine = function() {
         this.checkButtonElement.setAttribute('disabled', 'disabled');
 
         selectedCards = [];
+    };
+
+    const setCheckingCountdown = (time, fromValue) => {
+        return setInterval(() => {
+            template.countdownElement.innerHTML = --fromValue;
+
+            if(fromValue === -1) {
+                clearCheckInterval();
+
+                handleCheckAction(false);
+            }
+        }, time);
     };
 
     this.init();
