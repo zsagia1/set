@@ -1,6 +1,6 @@
 const Settings = function() {
 
-    this.maintainPlayerNameInputs = function(playerNumber, playerInputsContainer) {
+    this.maintainPlayerNameInputs = (playerNumber, playerInputsContainer) => {
 
         var playerInputs = playerInputsContainer.getElementsByTagName('input');
 
@@ -22,14 +22,14 @@ const Settings = function() {
         }
     };
 
-    this.init = function() {
+    this.init = () => {
         template.playerNumberElement.setAttribute('value', defaultSettings.defaultPlayerNumber);
 
         template.playerNumberElement.addEventListener('change', (event) => {
             this.maintainPlayerNameInputs(event.target.value, template.playerInputsContainer);
         });
 
-        template.gameModesElement.addEventListener('change', function(event) {
+        template.gameModesElement.addEventListener('change', (event) => {
             if(event.target.value === 'competition') {
                 template.isAutoSupplementCheckboxElement.setAttribute('disabled', 'disabled');
                 template.isAutoSupplementCheckboxElement.removeAttribute('checked');
@@ -60,15 +60,7 @@ const Settings = function() {
         )
     );
 
-    this.getGameLevel = function() {
-        return document.querySelector('input[name=gameLevel]:checked').value;
-    };
-
-    this.getGameMode = function() {
-        return document.querySelector('input[name=gameMode]:checked').value;
-    };
-
-    this.getPlayers = function () {
+    this.getPlayers = () => {
         var playerInputs = template.playerInputsContainer.getElementsByTagName('input');
 
         return Array.from(playerInputs).map(
@@ -76,17 +68,15 @@ const Settings = function() {
         );
     };
 
-    this.isAutoSupplementButton = function() {
-        return !!document.querySelector('input[name=isAutoSupplementCheckbox]:checked');
-    };
+    this.getGameLevel = () => document.querySelector('input[name=gameLevel]:checked').value;
 
-    this.isSetButton = function() {
-        return !!document.querySelector('input[name=isSetCheckbox]:checked');
-    };
+    this.getGameMode = () => document.querySelector('input[name=gameMode]:checked').value;
 
-    this.isWhereSetButton = function() {
-        return !!document.querySelector('input[name=isWhereSetCheckbox]:checked');
-    };
+    this.isAutoSupplementButton = () => !!document.querySelector('input[name=isAutoSupplementCheckbox]:checked');
+
+    this.isSetButton = () => !!document.querySelector('input[name=isSetCheckbox]:checked');
+
+    this.isWhereSetButton = () => !!document.querySelector('input[name=isWhereSetCheckbox]:checked');
 
     this.init();
 };

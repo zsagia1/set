@@ -1,15 +1,15 @@
 var Deck = function(gameLevel) {
     this.cards = [];
 
-    this.isEmpty = function() {
-        return !!this.cards.length;
-    };
+    this.isEmpty = () => !!this.cards.length;
 
-    this.getDeckSize = function() {
-        return this.cards.length;
-    };
+    this.getDeckSize = () => this.cards.length;
+    
+    this.logOutDeck = () => console.log(this.cards);
 
-    this.createCards = function() {
+    this.handOutDeck = (cardNumber) => this.cards.splice(0, cardNumber);
+
+    this.createCards = () => {
         var cards = [];
 
         if(gameLevel === 'beginner') {
@@ -35,7 +35,7 @@ var Deck = function(gameLevel) {
         return cards;
     };
 
-    this.shuffleDeck = function(cards) {
+    this.shuffleDeck = (cards) => {
         var randomCards     = [];
         var pieceOfCards    = cards.length;
         var i;
@@ -53,15 +53,7 @@ var Deck = function(gameLevel) {
         return randomCards;
     };
 
-    this.logOutDeck = function() {
-        console.log(this.cards);
-    };
-
-    this.handOutDeck = function(cardNumber) {
-        return this.cards.splice(0, cardNumber);
-    };
-
-    this.init = function () {
+    this.init = () => {
         this.cards = this.createCards();
         this.cards = this.shuffleDeck(this.cards);
     

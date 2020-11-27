@@ -35,12 +35,12 @@ const Template = function() {
     this.playerNumberElement    = document.querySelector(PLAYER_NUMBER_ID);
     
 
-    this.changeAreas = function() {
+    this.changeAreas = () => {
         this.gameSettingsDivElement.classList.toggle('d-none');
         this.gameAreaDivElement.classList.toggle('d-none');
     };
 
-    this.createHeaderButtons = function(isSetButton, isWhereSetButton, isAutoSupplementButton) {
+    this.createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
         if(isSetButton == true) {
             const isSetButtonElement = document.createElement('button');
 
@@ -78,11 +78,11 @@ const Template = function() {
         }
     };
 
-    this.createGameAreaContainer = function() {
+    this.createGameAreaContainer = () => {
         this.gameAreaContainer = document.querySelector(GAME_AREA_CONTAINER_ID);
     };
 
-    this.createGamePlayersContainer = function() {
+    this.createGamePlayersContainer = () => {
         this.gamePlayersContainer = document.querySelector(GAME_PLAYERS_CONTAINER_ID);
     };
 };
