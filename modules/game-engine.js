@@ -7,6 +7,7 @@ const GameEngine = function() {
     let playersMap = new Map();
     let selectedCards = [];
     let selectedPlayerContainer = null;
+    let timeForCheck = null;
 
     
 
@@ -16,6 +17,8 @@ const GameEngine = function() {
     };
 
     this.startGame = (config) => {
+        timeForCheck = config.timeForCheck;
+
         createCheckButtonElement();
         
         createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
