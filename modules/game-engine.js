@@ -273,6 +273,26 @@ const GameEngine = function() {
     const createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
 
         template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
+
+        if(isSetButton == true) {
+            setClickEventOnIsSetButton();
+        }
+
+        
+    };
+
+    const setClickEventOnIsSetButton = () => {
+        template.isSetButtonElement.addEventListener('click', (event) => {
+            const currentSetsNumber = currentSets.length;
+            let isSetContainer = document.createElement('div');
+
+            isSetContainer.classList.add('isSet');
+            isSetContainer.innerHTML = currentSetsNumber > 0
+                ? `There is set on the board.`
+                : `There is no set on the board.`;
+
+            template.gameAreaHeaderElement.appendChild(isSetContainer);
+        });
     };
 
     const reset = () => {

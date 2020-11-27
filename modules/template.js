@@ -46,39 +46,39 @@ const Template = function() {
 
     this.createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
         if(isSetButton == true) {
-            const isSetButtonElement = document.createElement('button');
+            this.isSetButtonElement = document.createElement('button');
 
-            isSetButtonElement.innerHTML = 'Is there Set?';
-            isSetButtonElement.type = 'button';
-            isSetButtonElement.classList.add('btn');
-            isSetButtonElement.classList.add('btn-secondary');
-            isSetButtonElement.classList.add('mr-1');
+            this.isSetButtonElement.innerHTML = 'Is there Set?';
+            this.isSetButtonElement.type = 'button';
+            this.isSetButtonElement.classList.add('btn');
+            this.isSetButtonElement.classList.add('btn-secondary');
+            this.isSetButtonElement.classList.add('mr-1');
 
-            this.gameAreaHeaderElement.appendChild(isSetButtonElement);
+            this.gameAreaHeaderElement.appendChild(this.isSetButtonElement);
         }
 
         if(isWhereSetButton == true) {
-            const isWhereSetButtonElement = document.createElement('button');
+            this.isWhereSetButtonElement = document.createElement('button');
 
-            isWhereSetButtonElement.innerHTML = 'Where is the Set?';
-            isWhereSetButtonElement.type = 'button';
-            isWhereSetButtonElement.classList.add('btn');
-            isWhereSetButtonElement.classList.add('btn-secondary');
-            isWhereSetButtonElement.classList.add('mr-1');
+            this.isWhereSetButtonElement.innerHTML = 'Where is the Set?';
+            this.isWhereSetButtonElement.type = 'button';
+            this.isWhereSetButtonElement.classList.add('btn');
+            this.isWhereSetButtonElement.classList.add('btn-secondary');
+            this.isWhereSetButtonElement.classList.add('mr-1');
 
-            this.gameAreaHeaderElement.appendChild(isWhereSetButtonElement);
+            this.gameAreaHeaderElement.appendChild(this.isWhereSetButtonElement);
         }
 
         if(isAutoSupplementButton == true) {
-            const isAutoSupplementButtonElement = document.createElement('button');
+            this.isAutoSupplementButtonElement = document.createElement('button');
 
-            isAutoSupplementButtonElement.innerHTML = 'Supplement';
-            isAutoSupplementButtonElement.type = 'button';
-            isAutoSupplementButtonElement.classList.add('btn');
-            isAutoSupplementButtonElement.classList.add('btn-secondary');
-            isAutoSupplementButtonElement.classList.add('mr-1');
+            this.isAutoSupplementButtonElement.innerHTML = 'Supplement';
+            this.isAutoSupplementButtonElement.type = 'button';
+            this.isAutoSupplementButtonElement.classList.add('btn');
+            this.isAutoSupplementButtonElement.classList.add('btn-secondary');
+            this.isAutoSupplementButtonElement.classList.add('mr-1');
 
-            this.gameAreaHeaderElement.appendChild(isAutoSupplementButtonElement);
+            this.gameAreaHeaderElement.appendChild(this.isAutoSupplementButtonElement);
         }
     };
 
