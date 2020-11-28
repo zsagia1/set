@@ -3,19 +3,23 @@ const GameEngine = function() {
     this.checkButtonElement = null;
 
     let cardsOnBoard = null;
+    let currentCheckInterval = null;
     let currentSets = [];
     let playersMap = new Map();
     let selectedCards = [];
     let selectedPlayerContainer = null;
+    let timeForCheck = null;
 
-    
 
     this.init = () => {
         template.createGameAreaContainer();
         template.createGamePlayersContainer();
+
     };
 
     this.startGame = (config) => {
+        timeForCheck = config.timeForCheck;
+
         createCheckButtonElement();
         
         createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
@@ -114,6 +118,8 @@ const GameEngine = function() {
         this.checkButtonElement.classList.add('mr-1');
 
         this.checkButtonElement.addEventListener('click', (event) => {
+            clearCheckInterval();
+            
             const isSet = checkSelectedCardsForSet();
 
             handleCheckAction(isSet);
@@ -142,6 +148,12 @@ const GameEngine = function() {
             reset();
 
             maintainGameAreaContainer();
+    };
+
+    const clearCheckInterval = () => {
+        clearInterval(currentCheckInterval);
+
+        template.countdownElement.innerHTML = '';
     };
 
     const maintainPlayer = (playerContainer, isSet) => {
@@ -178,6 +190,8 @@ const GameEngine = function() {
 
             if(isAction == true) {
                 playerContainer.addEventListener('click', (event) => {
+                    clearCheckInterval();
+
                     selectedPlayerContainer = playerContainer;
 
                     playerElements.forEach((playerElement) => {
@@ -185,6 +199,8 @@ const GameEngine = function() {
                     });
 
                     playerContainer.classList.add('selected');
+
+                    currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
                 });
             }
 
@@ -257,6 +273,61 @@ const GameEngine = function() {
     const createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
 
         template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
+
+        if(isSetButton == true) {
+            setClickEventOnIsSetButton();
+        }
+
+        if(isWhereSetButton == true) {
+            setClickEventOnIsWhereSetButton();
+        }
+    };
+
+    const setClickEventOnIsSetButton = () => {
+        template.isSetButtonElement.addEventListener('click', (event) => {
+            const currentSetsNumber = currentSets.length;
+            let isSetContainer = document.createElement('div');
+
+            isSetContainer.classList.add('isSet');
+            isSetContainer.innerHTML = currentSetsNumber > 0
+                ? `There is set on the board.`
+                : `There is no set on the board.`;
+
+            template.gameAreaHeaderElement.appendChild(isSetContainer);
+        });
+    };
+
+    const setClickEventOnIsWhereSetButton = () => {
+        template.isWhereSetButtonElement.addEventListener('click', (event) => {
+            if(currentSets === 0) {
+                let whereSetContainer = document.createElement('div');
+
+                whereSetContainer.classList.add('is-where-set');
+                whereSetContainer.innerHTML = `There is no set on the board`;
+
+                template.gameAreaHeaderElement.appendChild(whereSetContainer);
+            } else {
+                const currentSelectedSetCardElements = [];
+
+                currentSets[0].forEach((setCard) => {
+
+                    const setCardElement = 
+                        Array.from(template.gameAreaContainer.children).find((cardElement) => {
+
+                        const card = 
+                            JSON.parse(cardElement.getAttribute('data-card'));
+
+                        return card.name === setCard.name;
+                    });
+
+                    setCardElement.querySelector('img').classList.toggle('selected');
+
+                    currentSelectedSetCardElements.push(setCardElement);
+
+                    console.log(currentSelectedSetCardElements);
+                });
+            }
+        });
     };
 
     const reset = () => {
@@ -266,6 +337,18 @@ const GameEngine = function() {
         this.checkButtonElement.setAttribute('disabled', 'disabled');
 
         selectedCards = [];
+    };
+
+    const setCheckingCountdown = (time, fromValue) => {
+        return setInterval(() => {
+            template.countdownElement.innerHTML = --fromValue;
+
+            if(fromValue === -1) {
+                clearCheckInterval();
+
+                handleCheckAction(false);
+            }
+        }, time);
     };
 
     this.init();

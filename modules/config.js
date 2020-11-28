@@ -12,4 +12,5 @@ var Config = function(
     this.isAutoSupplementButton = isAutoSupplementButton || false;
     this.isSetButton            = isSetButton || false;
     this.isWhereSetButton       = isWhereSetButton || false;
+    this.timeForCheck           = 10;
 };
