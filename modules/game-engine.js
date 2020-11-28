@@ -15,6 +15,7 @@ const GameEngine = function() {
         template.createGameAreaContainer();
         template.createGamePlayersContainer();
 
+        registerKeyUpEvent();
     };
 
     this.startGame = (config) => {
@@ -326,6 +327,27 @@ const GameEngine = function() {
 
                     console.log(currentSelectedSetCardElements);
                 });
+            }
+        });
+    };
+
+    const registerKeyUpEvent = () => {
+        document.addEventListener('keyup', (event) => {
+            if(event.altKey == true) {
+                const index = event.code.replace('Numpad', '');
+
+                Array.from(template.gamePlayersContainer.children).forEach((playerElement) => {
+                    playerElement.classList.remove('selected');
+                });
+
+                selectedPlayerContainer = template.gamePlayersContainer.children[index];
+
+                selectedPlayerContainer.classList.add('selected');
+
+                currentCheckInterval = setCheckingCountdown(
+                    1000,
+                    timeForCheck
+                );
             }
         });
     };
