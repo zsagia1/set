@@ -10,11 +10,11 @@ const GameEngine = function() {
     let selectedPlayerContainer = null;
     let timeForCheck = null;
 
-    
 
     this.init = () => {
         template.createGameAreaContainer();
         template.createGamePlayersContainer();
+
     };
 
     this.startGame = (config) => {
@@ -278,7 +278,9 @@ const GameEngine = function() {
             setClickEventOnIsSetButton();
         }
 
-        
+        if(isWhereSetButton == true) {
+            setClickEventOnIsWhereSetButton();
+        }
     };
 
     const setClickEventOnIsSetButton = () => {
@@ -292,6 +294,39 @@ const GameEngine = function() {
                 : `There is no set on the board.`;
 
             template.gameAreaHeaderElement.appendChild(isSetContainer);
+        });
+    };
+
+    const setClickEventOnIsWhereSetButton = () => {
+        template.isWhereSetButtonElement.addEventListener('click', (event) => {
+            if(currentSets === 0) {
+                let whereSetContainer = document.createElement('div');
+
+                whereSetContainer.classList.add('is-where-set');
+                whereSetContainer.innerHTML = `There is no set on the board`;
+
+                template.gameAreaHeaderElement.appendChild(whereSetContainer);
+            } else {
+                const currentSelectedSetCardElements = [];
+
+                currentSets[0].forEach((setCard) => {
+
+                    const setCardElement = 
+                        Array.from(template.gameAreaContainer.children).find((cardElement) => {
+
+                        const card = 
+                            JSON.parse(cardElement.getAttribute('data-card'));
+
+                        return card.name === setCard.name;
+                    });
+
+                    setCardElement.querySelector('img').classList.toggle('selected');
+
+                    currentSelectedSetCardElements.push(setCardElement);
+
+                    console.log(currentSelectedSetCardElements);
+                });
+            }
         });
     };
 
