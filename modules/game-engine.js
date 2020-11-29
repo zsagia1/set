@@ -329,6 +329,10 @@ const GameEngine = function() {
                 : `There is no set on the board.`;
 
             template.gameAreaHeaderElement.appendChild(isSetContainer);
+
+            setTimeout(() => {
+                template.gameAreaHeaderElement.removeChild(template.gameAreaHeaderElement.lastChild);
+            }, 6000);
         });
     };
 
@@ -341,6 +345,10 @@ const GameEngine = function() {
                 whereSetContainer.innerHTML = `There is no set on the board`;
 
                 template.gameAreaHeaderElement.appendChild(whereSetContainer);
+
+                setTimeout(() => {
+                    template.gameAreaHeaderElement.removeChild(template.gameAreaHeaderElement.lastChild);
+                }, 6000);
             } else {
                 const currentSelectedSetCardElements = [];
 
@@ -358,9 +366,13 @@ const GameEngine = function() {
                     setCardElement.querySelector('img').classList.toggle('selected');
 
                     currentSelectedSetCardElements.push(setCardElement);
-
-                    console.log(currentSelectedSetCardElements);
                 });
+
+                setTimeout(() => {
+                    currentSelectedSetCardElements.forEach((setCardElement) => {
+                        return setCardElement.querySelector('img').classList.toggle('selected')
+                    });
+                }, 3000);
             }
         });
     };

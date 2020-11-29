@@ -32,13 +32,13 @@ const Settings = function() {
         template.gameModesElement.addEventListener('change', (event) => {
             if(event.target.value === 'competition') {
                 template.isAutoSupplementCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isAutoSupplementCheckboxElement.removeAttribute('checked');
+                template.isAutoSupplementCheckboxElement.checked = false;
 
                 template.isSetCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isSetCheckboxElement.removeAttribute('checked');
+                template.isSetCheckboxElement.checked = false;
 
                 template.isWhereSetCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isWhereSetCheckboxElement.removeAttribute('checked');
+                template.isWhereSetCheckboxElement.checked = false;
             } else {
                 template.isSetCheckboxElement.removeAttribute('disabled');
 
