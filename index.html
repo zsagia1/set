@@ -19,115 +19,116 @@
 
     <title>Set</title>
   </head>
+
   <body>
-    
-    <div class="container">
+    <main>
+      <div class="container">
+        <h1>Set Game <span id="countdown" style="margin-left: 10px;"></span></h1>
+        <a href="https://fejlesztojatekvilag.hu/uploaded/set_magyar_szabaly.pdf" target="_blank">Játékszabály</a>
 
-      <h1>Set Game <span id="countdown" style="margin-left: 10px;"></span></h1>
-      <a href="https://fejlesztojatekvilag.hu/uploaded/set_magyar_szabaly.pdf" target="_blank">Játékszabály</a>
+        <div class="row" id="gameSettingsDiv">
+          <section id="gameSettings" class="col-sm-6">
 
-      <div class="row" id="gameSettingsDiv">
-        <section id="gameSettings" class="col-sm-6">
-          <div class="row" style="margin: 10px 0">
-            <div class="col-sm-6">
-              <input type="number" id="playerNumber" name="playerNumber"
-                value="1" min="1" max="10" required>
-            </div>
-
-            <div class="col-sm-6" id="playerInputs">
-              <input type="text" name="" id="" value="Player1">
-            </div>
-          </div>
-
-          <div class="row">
-            <p>Select game mode:</p>
-
-              <div class="col-sm-12" id="gameModes">
-                <input type="radio" id="practice" name="gameMode" value="practice" checked>
-                <label for="practice">Practice</label><br>
-                <input type="radio" id="competition" name="gameMode" value="competition">
-                <label for="competition">Copetition</label>
+            <div class="row" style="margin: 10px 0">
+              <div class="col-sm-6">
+                <input type="number" id="playerNumber" name="playerNumber"
+                  value="1" min="1" max="10" required>
               </div>
-          </div>
 
-          <div class="row">
-            <p>Select game level:</p>
-
-              <div class="col-sm-12" id="gameLevels">
-                <input type="radio" id="beginner" name="gameLevel" value="beginner" checked>
-                <label for="beginner">Beginner</label><br>
-
-                <input type="radio" id="advanced" name="gameLevel" value="advanced">
-                <label for="advanced">Advanced</label>
+              <div class="col-sm-6" id="playerInputs">
+                <input type="text" name="" id="" value="Player1">
               </div>
-          </div>
-
-          <div class="row">
-            <p>Further Settings</p>
-
-            <div class="col-sm-12" id="furtherSettings">
-                <input type="checkbox" id="isSetCheckbox" name="isSetCheckbox">
-                <label for="isSetCheckbox">Do you want to use Show Is Set button?</label><br>
-
-                <input type="checkbox" id="isWhereSetCheckbox" name="isWhereSetCheckbox">
-                <label for="isWhereSetCheckbox">Do you want to use Show Where Set button?</label><br>
-
-                <input type="checkbox" id="isAutoSupplementCheckbox" name="isAutoSupplementCheckbox">
-                <label for="isAutoSupplementCheckbox">Do you want to use Auto Supplement button?</label>
             </div>
-          </div>
 
-        </section>
-
-        <section class="col-sm-6" id="gameSettingsImage">
-          <img src="SetGameImage.jpg" alt="This is an image about cards of the Set boardgame." width="450" height="450">
-        </section>
-
-        <div class="row">
-          <button type="button" class="btn btn-primary" onclick="start()">Start</button>
-        </div>
-      </div>
-
-      <div class="d-none m-2" id="gameAreaDiv">
-        <header class="m-3 game-area-header" id="gameAreaHeader">
-
-        </header>
-
-        <div class="row m-2">
-          <div class="col-sm-5">
-            
             <div class="row">
-              <div class="col-sm-4">
-                  Name
-              </div>
+              <p>Select game mode:</p>
 
-              <div class="col-sm-2">
-                  Attempts
-              </div>
-
-              <div class="col-sm-2">
-                  Correct
-              </div>
-
-              <div class="col-sm-2">
-                  Failed
-              </div>
-
-              <div class="col-sm-2">
-                  Points
-              </div>
+                <div class="col-sm-12" id="gameModes">
+                  <input type="radio" id="practice" name="gameMode" value="practice" checked>
+                  <label for="practice">Practice</label><br>
+                  <input type="radio" id="competition" name="gameMode" value="competition">
+                  <label for="competition">Copetition</label>
+                </div>
             </div>
 
-            <section id="gamePlayers"></section>
-          </div>
+            <div class="row">
+              <p>Select game level:</p>
 
-          <div class="col-sm-7">
-            <section id="gameArea" class="game-area"></section>
+                <div class="col-sm-12" id="gameLevels">
+                  <input type="radio" id="beginner" name="gameLevel" value="beginner" checked>
+                  <label for="beginner">Beginner</label><br>
+
+                  <input type="radio" id="advanced" name="gameLevel" value="advanced">
+                  <label for="advanced">Advanced</label>
+                </div>
+            </div>
+
+            <div class="row">
+              <p>Further Settings</p>
+
+              <div class="col-sm-12" id="furtherSettings">
+                  <input type="checkbox" id="isSetCheckbox" name="isSetCheckbox">
+                  <label for="isSetCheckbox">Do you want to use Show Is Set button?</label><br>
+
+                  <input type="checkbox" id="isWhereSetCheckbox" name="isWhereSetCheckbox">
+                  <label for="isWhereSetCheckbox">Do you want to use Show Where Set button?</label><br>
+
+                  <input type="checkbox" id="isAutoSupplementCheckbox" name="isAutoSupplementCheckbox">
+                  <label for="isAutoSupplementCheckbox">Do you want to use Auto Supplement button?</label>
+              </div>
+            </div>
+          </section>
+
+          <section class="col-sm-6" id="gameSettingsImage">
+            <img src="SetGameImage.jpg" alt="This is an image about cards of the Set boardgame." width="450" height="450">
+          </section>
+
+          <div class="row">
+            <button type="button" class="btn btn-primary" onclick="start()">Start</button>
           </div>
         </div>
 
+        <div class="d-none m-2" id="gameAreaDiv">
+          <header class="m-3 game-area-header" id="gameAreaHeader">
+
+          </header>
+
+          <div class="row m-2">
+            <div class="col-sm-5">
+
+              <div class="row">
+                <div class="col-sm-4">
+                    Name
+                </div>
+
+                <div class="col-sm-2">
+                    Attempts
+                </div>
+
+                <div class="col-sm-2">
+                    Correct
+                </div>
+
+                <div class="col-sm-2">
+                    Failed
+                </div>
+
+                <div class="col-sm-2">
+                    Points
+                </div>
+              </div>
+
+              <section id="gamePlayers"></section>
+            </div>
+
+            <div class="col-sm-7">
+              <section id="gameArea" class="game-area"></section>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </main>
 
     <script src="index.js"></script>
     
