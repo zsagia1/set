@@ -1,15 +1,18 @@
 const GameEngine = function() {
-    this.deck = null;
+    this.deck               = null;
     this.checkButtonElement = null;
 
-    let cardsOnBoard = null;
-    let currentCheckInterval = null;
-    let currentSets = [];
-    let isAutoSupplementButton = null;
-    let playersMap = new Map();
-    let selectedCards = [];
+    let cardsOnBoard            = null;
+    let currentCheckInterval    = null;
+    let currentSets             = [];
+    let gameLevel               = null;
+    let gameMode                = null;
+    let isAutoSupplementButton  = null;
+    let players                 = null;
+    let playersMap              = new Map();
+    let selectedCards           = [];
     let selectedPlayerContainer = null;
-    let timeForCheck = null;
+    let timeForCheck            = null;
 
 
     this.init = () => {
@@ -34,6 +37,8 @@ const GameEngine = function() {
         cardsOnBoard = this.deck.handOutDeck(12);
 
         maintainGameAreaContainer();
+
+        storage.startGame(this.getnow(), players, gameMode, gameLevel);
     };
 
     const generateThreeCardsArray = (cards) => {
@@ -147,6 +152,13 @@ const GameEngine = function() {
 
                 console.log(cardsOnBoard);
             }
+
+            storage.addHistoryItem(
+                this.getnow(),
+                JSON.parse(selectedPlayerContainer.getAttribute('data-player')),
+                selectedCards,
+                isSet
+            );
 
             reset();
 
@@ -402,6 +414,8 @@ const GameEngine = function() {
     };
 
     this.finishGame = () => {
+        storage.finishGame(this.getnow());
+
         template.gameAreaDivElement.classList.add('d-none');
         template.gameResultDivElement.classList.remove('d-none');
 

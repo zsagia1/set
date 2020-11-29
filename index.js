@@ -4,6 +4,7 @@ const defaultSettings = {
 
 const template = new Template();
 const settings = new Settings();
+const storage = new Storage();
 const gameEngine = new GameEngine();
 
 const start = () => {
