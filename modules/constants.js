@@ -26,3 +26,5 @@ const IS_WHERE_SET_CHECKBOX_ID          = '#isWhereSetCheckbox';
 
 const PLAYER_INPUTS_ID = '#playerInputs';
 const PLAYER_NUMBER_ID = '#playerNumber';
+
+const HISTORIES = "histories";
