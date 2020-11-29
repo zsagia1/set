@@ -374,6 +374,12 @@ const GameEngine = function() {
         });
     };
 
+    this.getnow = () => {
+        const date = new Date();
+
+        return date.getTime();
+    };
+
     const reset = () => {
         selectedPlayerContainer.classList.remove('selected');
         selectedPlayerContainer = null;
