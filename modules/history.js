@@ -1,15 +1,15 @@
 var History = function(startTime, players, gameMode, gameLevel) {
-    this.endTime    = null;
-    this.gameLevel  = gameLevel;
-    this.gameMode   = gameMode;
-    this.item       = [];
-    this.players    = players;
     this.startTime  = startTime;
+    this.players    = players;
+    this.gameMode   = gameMode;
+    this.gameLevel  = gameLevel;
+    this.endTime    = null;
+    this.item       = [];
 };
 
 var HistoryItem = function(actionTime, player, action, result) {
-    this.action     = action;
     this.actionTime = actionTime;
     this.player     = player;
+    this.action     = action;
     this.result     = result;
 };
