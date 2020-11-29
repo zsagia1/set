@@ -5,6 +5,8 @@ const Template = function() {
     this.gameAreaDivElement     = null;
     this.gameAreaHeaderElement  = null;
     this.gameSettingsDivElement = null;
+    this.gameRankElement        = null;
+    this.gameResultDivElement   = null;
 
     this.gameLevelsElement      = null;
     this.gameModesElement       = null;
@@ -27,6 +29,8 @@ const Template = function() {
     this.gameAreaDivElement     = document.querySelector(GAME_AREA_DIV_ID);
     this.gameAreaHeaderElement  = document.querySelector(GAME_AREA_HEADER_ID);
     this.gameSettingsDivElement = document.querySelector(GAME_SETTINGS_DIV_ID);
+    this.gameRankElement        = document.querySelector(GAME_RANK_ID);
+    this.gameResultDivElement   = document.querySelector(GAME_RESULT_DIV_ID);
 
     this.gameLevelsElement  = document.querySelector(GAME_LEVELS_ID);
     this.gameModesElement   = document.querySelector(GAME_MODES_ID);

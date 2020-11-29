@@ -1,14 +1,18 @@
 const GameEngine = function() {
-    this.deck = null;
+    this.deck               = null;
     this.checkButtonElement = null;
 
-    let cardsOnBoard = null;
-    let currentCheckInterval = null;
-    let currentSets = [];
-    let playersMap = new Map();
-    let selectedCards = [];
+    let cardsOnBoard            = null;
+    let currentCheckInterval    = null;
+    let currentSets             = [];
+    let gameLevel               = null;
+    let gameMode                = null;
+    let isAutoSupplementButton  = null;
+    let players                 = null;
+    let playersMap              = new Map();
+    let selectedCards           = [];
     let selectedPlayerContainer = null;
-    let timeForCheck = null;
+    let timeForCheck            = null;
 
 
     this.init = () => {
@@ -20,6 +24,7 @@ const GameEngine = function() {
 
     this.startGame = (config) => {
         timeForCheck = config.timeForCheck;
+        isAutoSupplementButton = config.isAutoSupplementButton;
 
         createCheckButtonElement();
         
@@ -32,6 +37,8 @@ const GameEngine = function() {
         cardsOnBoard = this.deck.handOutDeck(12);
 
         maintainGameAreaContainer();
+
+        storage.startGame(this.getnow(), players, gameMode, gameLevel);
     };
 
     const generateThreeCardsArray = (cards) => {
@@ -146,9 +153,22 @@ const GameEngine = function() {
                 console.log(cardsOnBoard);
             }
 
+            storage.addHistoryItem(
+                this.getnow(),
+                JSON.parse(selectedPlayerContainer.getAttribute('data-player')),
+                selectedCards,
+                isSet
+            );
+
             reset();
 
             maintainGameAreaContainer();
+
+            if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
+                this.finishGame();
+            } else if(currentSets.length === 0 && isAutoSupplementButton == true) {
+                template.isAutoSupplementButtonElement.removeAttribute('disabled');
+            }
     };
 
     const clearCheckInterval = () => {
@@ -227,28 +247,34 @@ const GameEngine = function() {
     };
 
     const maintainGameAreaContainer = () => {
+        currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+
+        while(currentSets.length === 0 && !isAutoSupplementButton && this.deck.getDeckSize() > 0) {
+            cardsOnBoard = [...cardsOnBoard, ...thid.deck.handOutDeck(3)];
+        }
+
         template.gameAreaContainer.innerHTML = "";
 
         cardsOnBoard.forEach((card) => {
-            const cardElement = document.createElement("span");
+            const cardElement = document.createElement('span');
 
-            cardElement.classList.add("card-container");
-            cardElement.setAttribute("data-card", JSON.stringify(card));
+            cardElement.classList.add('card-container');
+            cardElement.setAttribute('data-card', JSON.stringify(card));
 
-            var img = document.createElement("img");
+            var img = document.createElement('img');
 
-            img.addEventListener("click", (event) => {
+            img.addEventListener('click', (event) => {
                 if (selectedCards.length < 3 && !!selectedPlayerContainer) {
                     if (selectedCards.includes(card)) {
                         selectedCards = selectedCards.filter((selectedCard) => {
                             return selectedCard.name !== card.name;
                         });
 
-                        img.classList.toggle("selected");
+                        img.classList.toggle('selected');
                     } else {
                         selectedCards.push(card);
 
-                        img.classList.toggle("selected");
+                        img.classList.toggle('selected');
                     }
                 }
 
@@ -259,16 +285,14 @@ const GameEngine = function() {
                 console.log("Selected Cards: ", selectedCards);
             });
 
-            img.setAttribute("width", 120);
-            img.setAttribute("src", "images/" + card.imageURL);
-            img.setAttribute("data-card", JSON.stringify(card));
+            img.setAttribute('width', 120);
+            img.setAttribute('src', 'images/' + card.imageURL);
+            img.setAttribute('data-card', JSON.stringify(card));
 
             cardElement.appendChild(img);
 
             template.gameAreaContainer.appendChild(cardElement);
         });
-
-        currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));  
     };
 
     const createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
@@ -281,6 +305,16 @@ const GameEngine = function() {
 
         if(isWhereSetButton == true) {
             setClickEventOnIsWhereSetButton();
+        }
+
+        if(isAutoSupplementButton == true) {
+            template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
+
+            template.isAutoSupplementButtonElement.addEventListener('click', (event) => {
+                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+
+                maintainGameAreaContainer();
+            });
         }
     };
 
@@ -352,6 +386,12 @@ const GameEngine = function() {
         });
     };
 
+    this.getnow = () => {
+        const date = new Date();
+
+        return date.getTime();
+    };
+
     const reset = () => {
         selectedPlayerContainer.classList.remove('selected');
         selectedPlayerContainer = null;
@@ -371,6 +411,19 @@ const GameEngine = function() {
                 handleCheckAction(false);
             }
         }, time);
+    };
+
+    this.finishGame = () => {
+        storage.finishGame(this.getnow());
+
+        template.gameAreaDivElement.classList.add('d-none');
+        template.gameResultDivElement.classList.remove('d-none');
+
+        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
+            a.points < b.points ? 1 : -1
+        );
+
+        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false);
     };
 
     this.init();

@@ -9,6 +9,8 @@ const GAME_AREA_CONTAINER_ID    = '#gameArea';
 const GAME_AREA_DIV_ID          = '#gameAreaDiv';
 const GAME_AREA_HEADER_ID       = '#gameAreaHeader';
 const GAME_SETTINGS_DIV_ID      = '#gameSettingsDiv';
+const GAME_RANK_ID              = '#gameRank';
+const GAME_RESULT_DIV_ID        = "#gameResultDiv";
 
 const GAME_PLAYERS_CONTAINER_ID = '#gamePlayers';
 
@@ -25,3 +27,5 @@ const IS_WHERE_SET_CHECKBOX_ID          = '#isWhereSetCheckbox';
 
 const PLAYER_INPUTS_ID = '#playerInputs';
 const PLAYER_NUMBER_ID = '#playerNumber';
+
+const HISTORIES = "histories";
