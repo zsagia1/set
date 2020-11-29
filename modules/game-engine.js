@@ -149,6 +149,10 @@ const GameEngine = function() {
             reset();
 
             maintainGameAreaContainer();
+
+            if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
+                this.finishGame();
+            }
     };
 
     const clearCheckInterval = () => {
@@ -371,6 +375,17 @@ const GameEngine = function() {
                 handleCheckAction(false);
             }
         }, time);
+    };
+
+    this.finishGame = () => {
+        template.gameAreaDivElement.classList.add('d-none');
+        template.gameResultDivElement.classList.remove('d-none');
+
+        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
+            a.points < b.points ? 1 : -1
+        );
+
+        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false);
     };
 
     this.init();
