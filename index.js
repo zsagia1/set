@@ -1,5 +1,5 @@
 const defaultSettings = {
-    defaultPlayerNumber: 1,
+    defaultPlayerNumber: 1
 };
 
 const template      = new Template();

@@ -7,7 +7,7 @@ var Config = function(
     isWhereSetButton
 ) {
     this.playerNames            = playerNames || [];
-    this.gameLevel              = gameLevel || GAME_LEVELS_ID;
+    this.gameLevel              = gameLevel || GAME_LEVEL_BEGINNER;
     this.gameMode               = gameMode || GAME_MODE_PRACTICE;
     this.isAutoSupplementButton = isAutoSupplementButton || false;
     this.isSetButton            = isSetButton || false;
