@@ -9,11 +9,11 @@ var Rank = function() {
     };
 
     const calculateCompetitionRankPlayers = (gameLevel) => {
-        competitionHistories = histories.filter((history) => {
-            history.gameMode        === GAME_MODE_COMPETITION && 
+        competitionHistories = histories.filter((history) =>
+            history.gameMode        === GAME_MODE_COMPETITION &&
             history.gameLevel       === gameLevel &&
-            history.players.length  === 1;
-        });
+            history.players.length  === 1
+        );
 
         return competitionHistories.map((history) => {
             return {
@@ -45,7 +45,7 @@ var Rank = function() {
             tr.appendChild(td1);
             tr.appendChild(td2);
 
-            tableElement.appendChild('tr');
+            tableElement.appendChild(tr);
         });
 
         template.gameRankElement.appendChild(tableElement);

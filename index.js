@@ -3,8 +3,8 @@ const defaultSettings = {
 };
 
 const template      = new Template();
-const settings      = new Settings();
 const storage       = new Storage();
+const settings      = new Settings();
 const rank          = new Rank();
 const gameEngine    = new GameEngine();
 
