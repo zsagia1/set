@@ -17,7 +17,7 @@ var Rank = function() {
 
         return competitionHistories.map((history) => {
             return {
-                playerName: history.player[0].name,
+                playerName: history.players[0].name,
                 timeLength: (history.endTime - history.startTime) / 1000
             };
         }).sort((a, b) => (a.timeLength < b.timeLength ? -1 : 1));

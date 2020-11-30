@@ -40,11 +40,11 @@ const Settings = function() {
                 template.isWhereSetCheckboxElement.setAttribute('disabled', 'disabled');
                 template.isWhereSetCheckboxElement.checked = false;
             } else {
+                template.isAutoSupplementCheckboxElement.removeAttribute('disabled');
+
                 template.isSetCheckboxElement.removeAttribute('disabled');
 
                 template.isWhereSetCheckboxElement.removeAttribute('disabled');
-
-                template.isAutoSupplementCheckboxElement.removeAttribute('disabled');
             }
         });
     };

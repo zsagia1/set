@@ -7,7 +7,7 @@ const GameEngine = function() {
     let currentSets             = [];
     let gameLevel               = null;
     let gameMode                = null;
-    let isAutoSupplementButton  = null;
+    let isAutoSupplementButton  = false;
     let players                 = null;
     let playersMap              = new Map();
     let selectedCards           = [];
@@ -23,6 +23,8 @@ const GameEngine = function() {
     };
 
     this.startGame = (config) => {
+        gameMode    = config.gameMode;
+        gameLevel   = config.gameLevel;
         timeForCheck = config.timeForCheck;
         isAutoSupplementButton = config.isAutoSupplementButton;
 
@@ -41,53 +43,17 @@ const GameEngine = function() {
         storage.startGame(this.getnow(), players, gameMode, gameLevel);
     };
 
-    const generateThreeCardsArray = (cards) => {
-        const threeCards = new Map();
-
-        cards.forEach((card1) =>
-            cards.forEach((card2) =>
-                cards.forEach((card3) => {
-                    if(card1 !== card2 && card1 !==card3 && card2 !==card3) {
-                        const selectedCards = [card1, card2, card3];
-                        const sortedSelectedCards = selectedCards.sort((c1, c2) => {
-                            c1.name < c2.name ? 1 : -1
-                        });
-                        const name = sortedSelectedCards.map((c) => c.name).join('-');
-
-                        threeCards.set(name, selectedCards);
-                    }
-                })
-            )
-        );
-
-        console.log(threeCards);
-
-        return threeCards;
-    };
-
-    const equalOrDifferent = (values) => {
-        return (
-                (values[0]  === values[1] &&
-                values[0]   === values[2] &&
-                values[1]   === values[2]) 
-                ||
-                (values[0]  !== values[1] &&
-                values[0]   !== values[2] &&
-                values[1]   !== values[2])
-        );
-    };
-
-    const findSet = (cardsMap) => {
-        const correctSets = [];
-
-        Array.from(cardsMap.values()).forEach((cards) => {
-
-            if(checkSetOnCards(cards) == true) {
-                correctSets.push(cards);
+    const checkSelectedCardsForSet = () => {
+        return currentSets.reduce((isSet, currentCards) => {
+            if(
+                currentCards.includes(selectedCards[0]) &&
+                currentCards.includes(selectedCards[1]) &&
+                currentCards.includes(selectedCards[2])
+            ) {
+                isSet = true;
             }
-        });
-
-        return correctSets;
+            return isSet;
+        }, false);
     };
 
     const checkSetOnCards = (cards) => {
@@ -103,17 +69,10 @@ const GameEngine = function() {
         }
     };
 
-    const checkSelectedCardsForSet = () => {
-        return currentSets.reduce((isSet, currentCards) => {
-            if(
-                currentCards.includes(selectedCards[0]) &&
-                currentCards.includes(selectedCards[1]) &&
-                currentCards.includes(selectedCards[2])
-            ) {
-                isSet = true;
-            }
-            return isSet;
-        }, false);
+    const clearCheckInterval = () => {
+        clearInterval(currentCheckInterval);
+
+        template.countdownElement.innerHTML = '';
     };
 
     const createCheckButtonElement = () => {
@@ -136,67 +95,12 @@ const GameEngine = function() {
         template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
     };
 
-    const handleCheckAction = (isSet) => {
-        maintainPlayer(selectedPlayerContainer, isSet);
+    const createGamePlayers = (playerNames, container) => {
+        players = playerNames.map((playerName) => new Player(playerName));
 
-            if(isSet == true) {
-                selectedCards.forEach((card) => {
-                    cardsOnBoard = cardsOnBoard.filter(
-                        (cardOnBoard) => cardOnBoard !== card
-                    );
-                });
+        players.forEach((player) => playersMap.set(player.name, player));
 
-                console.log(cardsOnBoard);
-
-                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
-
-                console.log(cardsOnBoard);
-            }
-
-            storage.addHistoryItem(
-                this.getnow(),
-                JSON.parse(selectedPlayerContainer.getAttribute('data-player')),
-                selectedCards,
-                isSet
-            );
-
-            reset();
-
-            maintainGameAreaContainer();
-
-            if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
-                this.finishGame();
-            } else if(currentSets.length === 0 && isAutoSupplementButton == true) {
-                template.isAutoSupplementButtonElement.removeAttribute('disabled');
-            }
-    };
-
-    const clearCheckInterval = () => {
-        clearInterval(currentCheckInterval);
-
-        template.countdownElement.innerHTML = '';
-    };
-
-    const maintainPlayer = (playerContainer, isSet) => {
-        const player = JSON.parse(playerContainer.getAttribute('data-player'));
-
-        player.attempts = player.attempts + 1;
-
-        if(isSet == true) {
-            player.corrects = player.corrects + 1;
-            player.points = player.points + 1;
-        } else {
-            player.fails = player.fails + 1;
-        }
-
-        playerContainer.querySelector('.attempts').innerHTML    = player.attempts;
-        playerContainer.querySelector('.corrects').innerHTML    = player.corrects;
-        playerContainer.querySelector('.fails').innerHTML       = player.fails;
-        playerContainer.querySelector('.points').innerHTML      = player.points;
-
-        playerContainer.setAttribute('data-player', JSON.stringify(player));
-
-        playersMap.set(player.name, player);
+        createGamePlayerList(players, container, true);
     };
 
     const createGamePlayerList = (players, container, isAction) => {
@@ -238,12 +142,111 @@ const GameEngine = function() {
         });
     };
 
-    const createGamePlayers = (playerNames, container) => {
-        players = playerNames.map((playerName) => new Player(playerName));
+    const createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
 
-        players.forEach(player => playersMap.set(player.name, player));
+        template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
 
-        createGamePlayerList(players, container, true);
+        if(isSetButton == true) {
+            setClickEventOnIsSetButton();
+        }
+
+        if(isWhereSetButton == true) {
+            setClickEventOnIsWhereSetButton();
+        }
+
+        if(isAutoSupplementButton == true) {
+            template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
+
+            template.isAutoSupplementButtonElement.addEventListener('click', (event) => {
+                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+
+                maintainGameAreaContainer();
+            });
+        }
+    };
+
+    const equalOrDifferent = (values) => {
+        return (
+                (values[0]  === values[1] &&
+                values[0]   === values[2] &&
+                values[1]   === values[2]) 
+                ||
+                (values[0]  !== values[1] &&
+                values[0]   !== values[2] &&
+                values[1]   !== values[2])
+        );
+    };
+
+    const findSet = (cardsMap) => {
+        const correctSets = [];
+
+        Array.from(cardsMap.values()).forEach((cards) => {
+
+            if(checkSetOnCards(cards) == true) {
+                correctSets.push(cards);
+            }
+        });
+        return correctSets;
+    };
+
+    const generateThreeCardsArray = (cards) => {
+        const threeCards = new Map();
+
+        cards.forEach((card1) =>
+            cards.forEach((card2) =>
+                cards.forEach((card3) => {
+                    if(card1.name !== card2.name && card1.name !== card3.name && card2.name !== card3.name) {
+                        const selectedCards = [card1, card2, card3];
+                        const sortedSelectedCards = selectedCards.sort((c1, c2) => {
+                            c1.name < c2.name ? 1 : -1
+                        });
+                        const name = sortedSelectedCards.map((c) => c.name).join('-');
+
+                        threeCards.set(name, selectedCards);
+                    }
+                })
+            )
+        );
+        return threeCards;
+    };
+
+    this.getnow = () => {
+        const date = new Date();
+
+        return date.getTime();
+    };
+
+    const handleCheckAction = (isSet) => {
+        maintainPlayer(selectedPlayerContainer, isSet);
+
+        if(isSet == true) {
+            selectedCards.forEach((card) => {
+                cardsOnBoard = cardsOnBoard.filter(
+                    (cardOnBoard) => cardOnBoard !== card
+                );
+            });
+
+            console.log(cardsOnBoard);
+
+            cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+        }
+
+        storage.addHistoryItem(
+            this.getnow(),
+            JSON.parse(selectedPlayerContainer.getAttribute('data-player')),
+            selectedCards,
+            isSet
+        );
+
+        reset();
+
+        maintainGameAreaContainer();
+
+        if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
+            this.finishGame();
+        } else if(currentSets.length === 0 && isAutoSupplementButton == true) {
+            template.isAutoSupplementButtonElement.removeAttribute('disabled');
+        }
     };
 
     const maintainGameAreaContainer = () => {
@@ -254,6 +257,7 @@ const GameEngine = function() {
         }
 
         template.gameAreaContainer.innerHTML = "";
+        template.cardNumberElement.innerHTML = this.deck.getDeckSize();
 
         cardsOnBoard.forEach((card) => {
             const cardElement = document.createElement('span');
@@ -285,7 +289,7 @@ const GameEngine = function() {
                 console.log("Selected Cards: ", selectedCards);
             });
 
-            img.setAttribute('width', 120);
+            img.setAttribute('width', 110);
             img.setAttribute('src', 'images/' + card.imageURL);
             img.setAttribute('data-card', JSON.stringify(card));
 
@@ -295,27 +299,57 @@ const GameEngine = function() {
         });
     };
 
-    const createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
+    const maintainPlayer = (playerContainer, isSet) => {
+        const player = JSON.parse(playerContainer.getAttribute('data-player'));
 
-        template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
+        player.attempts = player.attempts + 1;
 
-        if(isSetButton == true) {
-            setClickEventOnIsSetButton();
+        if(isSet == true) {
+            player.corrects = player.corrects + 1;
+            player.points   = player.points + 1;
+        } else {
+            player.fails    = player.fails + 1;
+            player.points   = player.points - 1;
         }
 
-        if(isWhereSetButton == true) {
-            setClickEventOnIsWhereSetButton();
-        }
+        playerContainer.querySelector('.attempts').innerHTML    = player.attempts;
+        playerContainer.querySelector('.corrects').innerHTML    = player.corrects;
+        playerContainer.querySelector('.fails').innerHTML       = player.fails;
+        playerContainer.querySelector('.points').innerHTML      = player.points;
 
-        if(isAutoSupplementButton == true) {
-            template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
+        playerContainer.setAttribute('data-player', JSON.stringify(player));
 
-            template.isAutoSupplementButtonElement.addEventListener('click', (event) => {
-                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+        playersMap.set(player.name, player);
+    };
 
-                maintainGameAreaContainer();
-            });
-        }
+    const registerKeyUpEvent = () => {
+        document.addEventListener('keyup', (event) => {
+            if(event.altKey == true) {
+                const index = event.code.replace('Numpad', '');
+
+                Array.from(template.gamePlayersContainer.children).forEach((playerElement) => {
+                    playerElement.classList.remove('selected');
+                });
+
+                selectedPlayerContainer = template.gamePlayersContainer.children[index];
+
+                selectedPlayerContainer.classList.add('selected');
+
+                currentCheckInterval = setCheckingCountdown(
+                    1000,
+                    timeForCheck
+                );
+            }
+        });
+    };
+
+    const reset = () => {
+        selectedPlayerContainer.classList.remove('selected');
+        selectedPlayerContainer = null;
+
+        this.checkButtonElement.setAttribute('disabled', 'disabled');
+
+        selectedCards = [];
     };
 
     const setClickEventOnIsSetButton = () => {
@@ -353,10 +387,8 @@ const GameEngine = function() {
                 const currentSelectedSetCardElements = [];
 
                 currentSets[0].forEach((setCard) => {
-
                     const setCardElement = 
                         Array.from(template.gameAreaContainer.children).find((cardElement) => {
-
                         const card = 
                             JSON.parse(cardElement.getAttribute('data-card'));
 
@@ -375,42 +407,6 @@ const GameEngine = function() {
                 }, 3000);
             }
         });
-    };
-
-    const registerKeyUpEvent = () => {
-        document.addEventListener('keyup', (event) => {
-            if(event.altKey == true) {
-                const index = event.code.replace('Numpad', '');
-
-                Array.from(template.gamePlayersContainer.children).forEach((playerElement) => {
-                    playerElement.classList.remove('selected');
-                });
-
-                selectedPlayerContainer = template.gamePlayersContainer.children[index];
-
-                selectedPlayerContainer.classList.add('selected');
-
-                currentCheckInterval = setCheckingCountdown(
-                    1000,
-                    timeForCheck
-                );
-            }
-        });
-    };
-
-    this.getnow = () => {
-        const date = new Date();
-
-        return date.getTime();
-    };
-
-    const reset = () => {
-        selectedPlayerContainer.classList.remove('selected');
-        selectedPlayerContainer = null;
-
-        this.checkButtonElement.setAttribute('disabled', 'disabled');
-
-        selectedCards = [];
     };
 
     const setCheckingCountdown = (time, fromValue) => {
