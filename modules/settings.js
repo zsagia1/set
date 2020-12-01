@@ -7,7 +7,7 @@ const Settings = function() {
         if(playerInputs.length > playerNumber) {
             while(playerInputs.length > playerNumber) {
                 playerInputsContainer.removeChild(
-                    playerInputsContainer.childNodes[playerInputs.length]
+                    playerInputsContainer.childNodes[playerInputs.length + 1]
                 );
             }
         } else if(playerInputs.length < playerNumber) {
