@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +31,9 @@
 
         <div class="row" id="gameSettingsDiv">
           <section id="gameSettings" class="col-sm-6">
+            <div class="row">
+              <h2>Settings</h2>
+            </div>
 
             <div class="row" style="margin: 10px 0">
               <div class="col-sm-6">
@@ -49,7 +53,7 @@
                   <input type="radio" id="practice" name="gameMode" value="practice" checked>
                   <label for="practice">Practice</label><br>
                   <input type="radio" id="competition" name="gameMode" value="competition">
-                  <label for="competition">Copetition</label>
+                  <label for="competition">Competition</label>
                 </div>
             </div>
 
@@ -59,16 +63,17 @@
                 <div class="col-sm-12" id="gameLevels">
                   <input type="radio" id="beginner" name="gameLevel" value="beginner" checked>
                   <label for="beginner">Beginner</label><br>
-
                   <input type="radio" id="advanced" name="gameLevel" value="advanced">
                   <label for="advanced">Advanced</label>
                 </div>
             </div>
 
-            <div class="row">
-              <h2>Further Settings</h2>
+            <div class="row" id="gameFurtherSettingsDiv">
+              <div class="row">
+                <h2>Further Settings</h2>
+              </div>
 
-              <div class="col-sm-12" id="furtherSettings">
+              <div class="col-sm-12">
                   <input type="checkbox" id="isSetCheckbox" name="isSetCheckbox">
                   <label for="isSetCheckbox">Do you want to use Show Is Set button?</label><br>
 
@@ -137,7 +142,7 @@
       </div>
     </main>
 
-    <script src="index.js"></script>
-    
+    <script src="index.js"></script>   
   </body>
+
 </html>

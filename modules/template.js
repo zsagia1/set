@@ -2,12 +2,13 @@ const Template = function() {
     this.cardNumberElement  = null;
     this.countdownElement   = null;
     
-    this.gameAreaContainer      = null;
-    this.gameAreaDivElement     = null;
-    this.gameAreaHeaderElement  = null;
-    this.gameSettingsDivElement = null;
-    this.gameRankElement        = null;
-    this.gameResultDivElement   = null;
+    this.gameAreaContainer              = null;
+    this.gameAreaDivElement             = null;
+    this.gameAreaHeaderElement          = null;
+    this.gameFurtherSettingsDivElement  = null;
+    this.gameRankElement                = null;
+    this.gameResultDivElement           = null;
+    this.gameSettingsDivElement         = null;
 
     this.gameLevelsElement      = null;
     this.gameModesElement       = null;
@@ -26,12 +27,13 @@ const Template = function() {
     this.cardNumberElement  = document.querySelector(CARD_NUMBER_ID);
     this.countdownElement   = document.querySelector(COUNTDOWN_ID);
 
-    this.gameAreaContainer      = document.querySelector(GAME_AREA_ID);
-    this.gameAreaDivElement     = document.querySelector(GAME_AREA_DIV_ID);
-    this.gameAreaHeaderElement  = document.querySelector(GAME_AREA_HEADER_ID);
-    this.gameSettingsDivElement = document.querySelector(GAME_SETTINGS_DIV_ID);
-    this.gameRankElement        = document.querySelector(GAME_RANK_ID);
-    this.gameResultDivElement   = document.querySelector(GAME_RESULT_DIV_ID);
+    this.gameAreaContainer              = document.querySelector(GAME_AREA_ID);
+    this.gameAreaDivElement             = document.querySelector(GAME_AREA_DIV_ID);
+    this.gameAreaHeaderElement          = document.querySelector(GAME_AREA_HEADER_ID);
+    this.gameFurtherSettingsDivElement  = document.querySelector(GAME_FURTHER_SETTINGS_DIV_ID);
+    this.gameRankElement                = document.querySelector(GAME_RANK_ID);
+    this.gameResultDivElement           = document.querySelector(GAME_RESULT_DIV_ID);
+    this.gameSettingsDivElement         = document.querySelector(GAME_SETTINGS_DIV_ID);
 
     this.gameLevelsElement  = document.querySelector(GAME_LEVELS_ID);
     this.gameModesElement   = document.querySelector(GAME_MODES_ID);

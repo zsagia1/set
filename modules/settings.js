@@ -31,20 +31,13 @@ const Settings = function() {
 
         template.gameModesElement.addEventListener('change', (event) => {
             if(event.target.value === 'competition') {
-                template.isAutoSupplementCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isAutoSupplementCheckboxElement.checked = false;
+                template.gameFurtherSettingsDivElement.style.display = 'none';
 
-                template.isSetCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isSetCheckboxElement.checked = false;
-
-                template.isWhereSetCheckboxElement.setAttribute('disabled', 'disabled');
-                template.isWhereSetCheckboxElement.checked = false;
+                template.isAutoSupplementCheckboxElement.checked    = false;
+                template.isSetCheckboxElement.checked               = false;
+                template.isWhereSetCheckboxElement.checked          = false;
             } else {
-                template.isAutoSupplementCheckboxElement.removeAttribute('disabled');
-
-                template.isSetCheckboxElement.removeAttribute('disabled');
-
-                template.isWhereSetCheckboxElement.removeAttribute('disabled');
+                template.gameFurtherSettingsDivElement.style.display = 'block';
             }
         });
     };
