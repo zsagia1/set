@@ -27,9 +27,9 @@ Az alap feladatok (14 pont)
 - [X] A játék nyitólapjáról elérhető a játék leírása (0,5 pont)
 - [X] A játék nyitólapján megjelennek az alap beállítási lehetőségek: játékosok, mód, egyéb (0,5 pont)
 - [ ] Verseny módot használva az egyéb beállítások nem jelennek meg (0,5 pont) //meg megjelennek
-- [X] A játékosok neve megadható, annyi beviteli mezőben, ahány játékossal szeretnénk játszani. Van alapértelmezett játékosnév (pl. Játékos1, Játékos2, stb). (1 pont) //nem az utolso jatekost torli
+- [X] A játékosok neve megadható, annyi beviteli mezőben, ahány játékossal szeretnénk játszani. Van alapértelmezett játékosnév (pl. Játékos1, Játékos2, stb). (1 pont)
 - [X] SET-et bemondó játékos kijelölhető (1 pont)
-- [ ] 1 játékos esetén a játékos mindig ki van jelölve (1 pont) //hianyzik meg
+- [X] 1 játékos esetén a játékos mindig ki van jelölve (1 pont)
 - [X] Kártyaválasztásnál egy kijelölt kártyára kattintva a jelölés visszavonható (1 pont) //ha ki van valasztva harom nap, ne lehessen playert valtoztatni
 - [X] 10mp áll rendelkezésre a játékosválasztástól a SET kijelöléséig (1 pont)
 - [X] Helyes SET esetén a tippelő játékos 1 pontot kap (0,5 pont)

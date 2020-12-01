@@ -8,6 +8,7 @@ const GameEngine = function() {
     let gameLevel               = null;
     let gameMode                = null;
     let isAutoSupplementButton  = false;
+    let isSingleMode            = false;
     let players                 = null;
     let playersMap              = new Map();
     let selectedCards           = [];
@@ -27,12 +28,17 @@ const GameEngine = function() {
         gameLevel   = config.gameLevel;
         timeForCheck = config.timeForCheck;
         isAutoSupplementButton = config.isAutoSupplementButton;
+        isSingleMode = config.playerNames.length === 1;
 
         createCheckButtonElement();
         
         createHeaderButtons(config.isSetButton, config.isWhereSetButton, config.isAutoSupplementButton);
 
-        createGamePlayers(config.playerNames, template.gamePlayersContainer);
+        createGamePlayers(config.playerNames, template.gamePlayersContainer, isSingleMode);
+
+        if(isSingleMode == true) {
+            selectPlayer(0);
+        }
 
         this.deck = new Deck(config.gameLevel);
 
@@ -95,15 +101,15 @@ const GameEngine = function() {
         template.gameAreaHeaderElement.appendChild(this.checkButtonElement);
     };
 
-    const createGamePlayers = (playerNames, container) => {
+    const createGamePlayers = (playerNames, container, isSingleMode) => {
         players = playerNames.map((playerName) => new Player(playerName));
 
         players.forEach((player) => playersMap.set(player.name, player));
 
-        createGamePlayerList(players, container, true);
+        createGamePlayerList(players, container, true, isSingleMode);
     };
 
-    const createGamePlayerList = (players, container, isAction) => {
+    const createGamePlayerList = (players, container, isAction, isSingleMode) => {
         const playerElements = [];
 
         players.forEach((player) => {
@@ -113,7 +119,7 @@ const GameEngine = function() {
             playerContainer.classList.add('player');
             playerContainer.setAttribute('data-player', JSON.stringify(player));
 
-            if(isAction == true) {
+            if(isAction == true && !isSingleMode) {
                 playerContainer.addEventListener('click', (event) => {
                     clearCheckInterval();
 
@@ -238,7 +244,7 @@ const GameEngine = function() {
             isSet
         );
 
-        reset();
+        reset(isSingleMode);
 
         maintainGameAreaContainer();
 
@@ -331,9 +337,7 @@ const GameEngine = function() {
                     playerElement.classList.remove('selected');
                 });
 
-                selectedPlayerContainer = template.gamePlayersContainer.children[index];
-
-                selectedPlayerContainer.classList.add('selected');
+                selectPlayer(index);
 
                 currentCheckInterval = setCheckingCountdown(
                     1000,
@@ -343,13 +347,21 @@ const GameEngine = function() {
         });
     };
 
-    const reset = () => {
-        selectedPlayerContainer.classList.remove('selected');
-        selectedPlayerContainer = null;
+    const reset = (isSingleMode) => {
+        if(!isSingleMode) {
+            selectedPlayerContainer.classList.remove('selected');
+            selectedPlayerContainer = null;
+        }
 
         this.checkButtonElement.setAttribute('disabled', 'disabled');
 
         selectedCards = [];
+    };
+
+    const selectPlayer = (index) => {
+        selectedPlayerContainer = template.gamePlayersContainer.children[index];
+
+        selectedPlayerContainer.classList.add('selected');
     };
 
     const setClickEventOnIsSetButton = () => {
