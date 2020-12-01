@@ -259,7 +259,7 @@ const GameEngine = function() {
         currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
 
         while(currentSets.length === 0 && !isAutoSupplementButton && this.deck.getDeckSize() > 0) {
-            cardsOnBoard = [...cardsOnBoard, ...thid.deck.handOutDeck(3)];
+            cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
         }
 
         template.gameAreaContainer.innerHTML = "";
