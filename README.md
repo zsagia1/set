@@ -38,7 +38,7 @@ Az alap feladatok (14 pont)
 - [X] "Van-e SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont)
 - [ ] "Hol van SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (0,5 pont) // helytelen mukodes, nincs lekezelve az az eset ha nincs set az asztalon
 - [ ] "Plusz 3 lap" gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont) //a gomb akkor is aktiv marad mukodik ha mar van set az asztalon.
-- [ ] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont) // tesztelni kell
+- [ ] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont) // vege a jateknak ha nincs set
 - [X] Játék közben és végén a pontszám megjelenítése (0,5 pont)
 - [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //tesztelni kell
 - [X] Igényes kialakítás (1 pont)

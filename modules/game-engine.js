@@ -5,6 +5,7 @@ const GameEngine = function() {
     let cardsOnBoard            = null;
     let currentCheckInterval    = null;
     let currentSets             = [];
+    let failedPlayerContainers   = [];
     let gameLevel               = null;
     let gameMode                = null;
     let isAutoSupplementButton  = false;
@@ -36,7 +37,7 @@ const GameEngine = function() {
 
         createGamePlayers(config.playerNames, template.gamePlayersContainer, isSingleMode);
 
-        if(isSingleMode == true) {
+        if(isSingleMode === true) {
             selectPlayer(0);
         }
 
@@ -119,19 +120,21 @@ const GameEngine = function() {
             playerContainer.classList.add('player');
             playerContainer.setAttribute('data-player', JSON.stringify(player));
 
-            if(isAction == true && !isSingleMode) {
+            if(isAction === true && !isSingleMode) {
                 playerContainer.addEventListener('click', (event) => {
-                    clearCheckInterval();
+                    if (selectedCards.length === 0 && !failedPlayerContainers.includes(playerContainer)) {
+                        clearCheckInterval();
 
-                    selectedPlayerContainer = playerContainer;
-
-                    playerElements.forEach((playerElement) => {
-                        playerElement.classList.remove('selected');
-                    });
-
-                    playerContainer.classList.add('selected');
-
-                    currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
+                        selectedPlayerContainer = playerContainer;
+    
+                        playerElements.forEach((playerElement) => {
+                            playerElement.classList.remove('selected');
+                        });
+    
+                        playerContainer.classList.add('selected');
+    
+                        currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
+                    }
                 });
             }
 
@@ -152,15 +155,15 @@ const GameEngine = function() {
 
         template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
 
-        if(isSetButton == true) {
+        if(isSetButton === true) {
             setClickEventOnIsSetButton();
         }
 
-        if(isWhereSetButton == true) {
+        if(isWhereSetButton === true) {
             setClickEventOnIsWhereSetButton();
         }
 
-        if(isAutoSupplementButton == true) {
+        if(isAutoSupplementButton === true) {
             template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
 
             template.isAutoSupplementButtonElement.addEventListener('click', (event) => {
@@ -188,7 +191,7 @@ const GameEngine = function() {
 
         Array.from(cardsMap.values()).forEach((cards) => {
 
-            if(checkSetOnCards(cards) == true) {
+            if(checkSetOnCards(cards) === true) {
                 correctSets.push(cards);
             }
         });
@@ -225,7 +228,7 @@ const GameEngine = function() {
     const handleCheckAction = (isSet) => {
         maintainPlayer(selectedPlayerContainer, isSet);
 
-        if(isSet == true) {
+        if(isSet === true) {
             selectedCards.forEach((card) => {
                 cardsOnBoard = cardsOnBoard.filter(
                     (cardOnBoard) => cardOnBoard !== card
@@ -235,6 +238,14 @@ const GameEngine = function() {
             console.log(cardsOnBoard);
 
             cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+
+            failedPlayerContainers = [];
+        } else if(!isSingleMode) {
+            failedPlayerContainers.push(selectedPlayerContainer);
+        }
+
+        if(failedPlayerContainers.length === players.length) {
+            failedPlayerContainers = [];
         }
 
         storage.addHistoryItem(
@@ -250,7 +261,7 @@ const GameEngine = function() {
 
         if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
             this.finishGame();
-        } else if(currentSets.length === 0 && isAutoSupplementButton == true) {
+        } else if(currentSets.length === 0 && isAutoSupplementButton === true) {
             template.isAutoSupplementButtonElement.removeAttribute('disabled');
         }
     };
@@ -260,6 +271,7 @@ const GameEngine = function() {
 
         while(currentSets.length === 0 && !isAutoSupplementButton && this.deck.getDeckSize() > 0) {
             cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
         }
 
         template.gameAreaContainer.innerHTML = "";
@@ -310,7 +322,7 @@ const GameEngine = function() {
 
         player.attempts = player.attempts + 1;
 
-        if(isSet == true) {
+        if(isSet === true) {
             player.corrects = player.corrects + 1;
             player.points   = player.points + 1;
         } else {
@@ -330,7 +342,7 @@ const GameEngine = function() {
 
     const registerKeyUpEvent = () => {
         document.addEventListener('keyup', (event) => {
-            if(event.altKey == true) {
+            if(event.altKey === true) {
                 const index = event.code.replace('Numpad', '');
 
                 Array.from(template.gamePlayersContainer.children).forEach((playerElement) => {
