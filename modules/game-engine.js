@@ -274,6 +274,12 @@ const GameEngine = function() {
             currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
         }
 
+        if(currentSets.length > 0 && 
+            isAutoSupplementButton === true && 
+            !template.isAutoSupplementButtonElement.disabled) {
+                template.isAutoSupplementButtonElement.setAttribute('disabed', 'disabled');
+        }
+
         template.gameAreaContainer.innerHTML = "";
         template.cardNumberElement.innerHTML = this.deck.getDeckSize();
 
