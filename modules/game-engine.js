@@ -276,8 +276,8 @@ const GameEngine = function() {
 
         if(currentSets.length > 0 && 
             isAutoSupplementButton === true && 
-            !template.isAutoSupplementButtonElement.disabled) {
-                template.isAutoSupplementButtonElement.setAttribute('disabed', 'disabled');
+            template.isAutoSupplementButtonElement.disabled == false) {
+                template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
         }
 
         template.gameAreaContainer.innerHTML = "";
