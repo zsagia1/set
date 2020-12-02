@@ -396,7 +396,7 @@ const GameEngine = function() {
 
     const setClickEventOnIsWhereSetButton = () => {
         template.isWhereSetButtonElement.addEventListener('click', (event) => {
-            if(currentSets === 0) {
+            if(currentSets.length === 0) {
                 let whereSetContainer = document.createElement('div');
 
                 whereSetContainer.classList.add('is-where-set');

@@ -34,11 +34,11 @@ Az alap feladatok (14 pont)
 - [X] 10mp áll rendelkezésre a játékosválasztástól a SET kijelöléséig (1 pont)
 - [X] Helyes SET esetén a tippelő játékos 1 pontot kap (0,5 pont)
 - [X] Helytelen SET esetén a rosszul tippelő játékos -1 pontot kap (0,5 pont)
-- [ ] A játékosok kijelölése és kijelölhetősége helyesen változik (pl. tipp után a kijelölés megszűnik, vagy rosszul tippelő játékos már nem választhat az adott leosztásban) (1 pont) //hibazo jatekos meg tud valasztani
+- [X] A játékosok kijelölése és kijelölhetősége helyesen változik (pl. tipp után a kijelölés megszűnik, vagy rosszul tippelő játékos már nem választhat az adott leosztásban) (1 pont)
 - [X] "Van-e SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont)
 - [ ] "Hol van SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (0,5 pont) // helytelen mukodes, nincs lekezelve az az eset ha nincs set az asztalon
 - [ ] "Plusz 3 lap" gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont) //a gomb akkor is aktiv marad mukodik ha mar van set az asztalon.
-- [ ] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont) // vege a jateknak ha nincs set
+- [X] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont)
 - [X] Játék közben és végén a pontszám megjelenítése (0,5 pont)
 - [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //tesztelni kell
 - [X] Igényes kialakítás (1 pont)
