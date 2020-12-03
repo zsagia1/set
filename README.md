@@ -37,10 +37,10 @@ Az alap feladatok (14 pont)
 - [X] A játékosok kijelölése és kijelölhetősége helyesen változik (pl. tipp után a kijelölés megszűnik, vagy rosszul tippelő játékos már nem választhat az adott leosztásban) (1 pont)
 - [X] "Van-e SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont)
 - [X] "Hol van SET?" segítség gomb a beállításoknak megfelelően megjelenik és helyesen működik (0,5 pont)
-- [X] "Plusz 3 lap" gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont) //a gomb akkor is aktiv marad mukodik ha mar van set az asztalon.
+- [X] "Plusz 3 lap" gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont)
 - [X] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont)
 - [X] Játék közben és végén a pontszám megjelenítése (0,5 pont)
-- [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //A program akkor is oszt ki 3 lapot ha mar tobb, mint 12 lap van a boardon es van set
+- [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //teszteles szukseges
 - [X] Igényes kialakítás (1 pont)
 
 Plusz feladatok (plusz 5 pont)
@@ -51,5 +51,5 @@ Plusz feladatok (plusz 5 pont)
 - [X] A játék nyitólapján az 1 játékos mód 3 tulajdonságnál játszott top listája megjelenik (0,5 pont)
 - [X] A játék nyitólapján az 1 játékos mód 4 tulajdonságnál játszott top listája megjelenik (0,5 pont)
 - [ ] A játék nyitólapján az utolsó 10 többjátékos mód eredményei megjelennek. (0,5 pont) // hianyzik
-- [ ] Játék végén új játék az adott játékosokkal (1 pont) //hianyzik meg
-- [ ] Játék közben és végén a pontszám megjelenítése (aktuális/összesített) (0,5 pont) //tesztelni kell
+- [X] Játék végén új játék az adott játékosokkal (1 pont)
+- [ ] Játék közben és végén a pontszám megjelenítése (aktuális/összesített) (0,5 pont) //egyertelmubbe tenni a jatek vegen

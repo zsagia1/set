@@ -15,6 +15,7 @@ const GameEngine = function() {
     let selectedCards           = [];
     let selectedPlayerContainer = null;
     let timeForCheck            = null;
+    this.config = null;
 
 
     this.init = () => {
@@ -30,6 +31,7 @@ const GameEngine = function() {
         timeForCheck = config.timeForCheck;
         isAutoSupplementButton = config.isAutoSupplementButton;
         isSingleMode = config.playerNames.length === 1;
+        this.config = config
 
         createCheckButtonElement();
         
@@ -235,9 +237,9 @@ const GameEngine = function() {
                 );
             });
 
-            console.log(cardsOnBoard);
-
-            cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            if(cardsOnBoard.length < 12) {
+                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            }
 
             failedPlayerContainers = [];
         } else if(!isSingleMode) {
@@ -462,6 +464,31 @@ const GameEngine = function() {
         );
 
         createGamePlayerList(sortedPlayers, template.gameResultDivElement, false);
+        this.createStartAgain();
+    };
+
+    this.createStartAgain = () => {
+        startAgainButtonElement = document.createElement('button');
+
+        startAgainButtonElement.innerHTML = 'Start Again';
+        startAgainButtonElement.classList.add('btn');
+        startAgainButtonElement.classList.add('btn-primary');
+        startAgainButtonElement.classList.add('mr-1');
+
+        startAgainButtonElement.addEventListener('click', (event) => {
+            template.gameResultDivElement.innerHTML = '';
+            template.gamePlayersContainer.innerHTML = '';
+            template.gameAreaHeaderElement.innerHTML = '';
+
+            this.init();
+    
+            template.gameAreaDivElement.classList.remove('d-none');
+            template.gameResultDivElement.classList.add('d-none');
+
+            this.startGame(this.config);
+        });
+
+        template.gameResultDivElement.appendChild(startAgainButtonElement);
     };
 
     this.init();
