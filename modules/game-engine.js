@@ -26,12 +26,12 @@ const GameEngine = function() {
     };
 
     this.startGame = (config) => {
-        gameMode    = config.gameMode;
-        gameLevel   = config.gameLevel;
-        timeForCheck = config.timeForCheck;
-        isAutoSupplementButton = config.isAutoSupplementButton;
-        isSingleMode = config.playerNames.length === 1;
-        this.config = config
+        gameMode                = config.gameMode;
+        gameLevel               = config.gameLevel;
+        timeForCheck            = config.timeForCheck;
+        isAutoSupplementButton  = config.isAutoSupplementButton;
+        isSingleMode            = config.playerNames.length === 1;
+        this.config             = config
 
         createCheckButtonElement();
         
@@ -488,14 +488,20 @@ const GameEngine = function() {
     };
 
     this.finishGame = () => {
-        storage.finishGame(this.getnow());
+        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) => {
+            if(a.points < b.points) {
+                return 1;
+            } else if(a.points > b.points) {
+                return -1;
+            } else {
+                return a.fails > b.fails ? 1 : -1
+            }
+        });
+
+        storage.finishGame(this.getnow(), sortedPlayers);
 
         template.gameAreaDivElement.classList.add('d-none');
         template.gameResultDivElement.classList.remove('d-none');
-
-        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
-            a.points < b.points ? 1 : -1
-        );
 
         createGamePlayerList(sortedPlayers, template.gameResultDivElement, false, false, true);
         this.createStartAgain();

@@ -41,7 +41,7 @@ Az alap feladatok (14 pont)
 - [X] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont)
 - [X] Játék közben és végén a pontszám megjelenítése (0,5 pont)
 - [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //teszteles szukseges
-- [X] Igényes kialakítás (1 pont)
+- [] Igényes kialakítás (1 pont)
 
 Plusz feladatok (plusz 5 pont)
 
@@ -50,6 +50,6 @@ Plusz feladatok (plusz 5 pont)
 - [X] A játék eredménye elmentődik a böngészőbe lokálisan. (0,5 pont)
 - [X] A játék nyitólapján az 1 játékos mód 3 tulajdonságnál játszott top listája megjelenik (0,5 pont)
 - [X] A játék nyitólapján az 1 játékos mód 4 tulajdonságnál játszott top listája megjelenik (0,5 pont)
-- [ ] A játék nyitólapján az utolsó 10 többjátékos mód eredményei megjelennek. (0,5 pont) // hianyzik
+- [X] A játék nyitólapján az utolsó 10 többjátékos mód eredményei megjelennek. (0,5 pont)
 - [X] Játék végén új játék az adott játékosokkal (1 pont)
 - [X] Játék közben és végén a pontszám megjelenítése (aktuális/összesített) (0,5 pont)
