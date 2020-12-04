@@ -52,4 +52,4 @@ Plusz feladatok (plusz 5 pont)
 - [X] A játék nyitólapján az 1 játékos mód 4 tulajdonságnál játszott top listája megjelenik (0,5 pont)
 - [ ] A játék nyitólapján az utolsó 10 többjátékos mód eredményei megjelennek. (0,5 pont) // hianyzik
 - [X] Játék végén új játék az adott játékosokkal (1 pont)
-- [ ] Játék közben és végén a pontszám megjelenítése (aktuális/összesített) (0,5 pont) //egyertelmubbe tenni a jatek vegen
+- [X] Játék közben és végén a pontszám megjelenítése (aktuális/összesített) (0,5 pont)

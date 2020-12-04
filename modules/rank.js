@@ -26,7 +26,7 @@ var Rank = function() {
     const createCompetitionRank = (gameLevel) => {
         const headerElement = document.createElement('h2');
 
-        headerElement.innerHTML = gameLevel[0].toUpperCase() + gameLevel.slice(1)+ " " + "Competition Rank";
+        headerElement.innerHTML = gameLevel[0].toUpperCase() + gameLevel.slice(1) + ' ' + 'Competition Rank';
 
         const tableElement = document.createElement('table');
 

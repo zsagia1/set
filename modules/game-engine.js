@@ -109,13 +109,13 @@ const GameEngine = function() {
 
         players.forEach((player) => playersMap.set(player.name, player));
 
-        createGamePlayerList(players, container, true, isSingleMode);
+        createGamePlayerList(players, container, true, isSingleMode, false);
     };
 
-    const createGamePlayerList = (players, container, isAction, isSingleMode) => {
+    const createGamePlayerList = (players, container, isAction, isSingleMode, isEnded) => {
         const playerElements = [];
 
-        players.forEach((player) => {
+        players.forEach((player, index) => {
             const playerContainer = document.createElement('div');
 
             playerContainer.classList.add('row');
@@ -140,12 +140,22 @@ const GameEngine = function() {
                 });
             }
 
-            playerContainer.innerHTML = 
+            if(isEnded === true) {
+                playerContainer.innerHTML = 
+                '<div class="col-sm-1 index">'      + (index + 1) + '.' + '</div>' +
+                '<div class="col-sm-3 name">'       + player.name       + '</div>' +
+                '<div class="col-sm-2 attempts">'   + player.attempts   + '</div>' +
+                '<div class="col-sm-2 corrects">'   + player.corrects   + '</div>' +
+                '<div class="col-sm-2 fails">'      + player.fails      + '</div>' +
+                '<div class="col-sm-2 points">'     + player.points     + '</div>';
+            } else {
+                playerContainer.innerHTML = 
                 '<div class="col-sm-4 name">'       + player.name       + '</div>' +
                 '<div class="col-sm-2 attempts">'   + player.attempts   + '</div>' +
                 '<div class="col-sm-2 corrects">'   + player.corrects   + '</div>' +
                 '<div class="col-sm-2 fails">'      + player.fails      + '</div>' +
                 '<div class="col-sm-2 points">'     + player.points     + '</div>';
+            }
 
             playerElements.push(playerContainer);
 
@@ -453,20 +463,6 @@ const GameEngine = function() {
         }, time);
     };
 
-    this.finishGame = () => {
-        storage.finishGame(this.getnow());
-
-        template.gameAreaDivElement.classList.add('d-none');
-        template.gameResultDivElement.classList.remove('d-none');
-
-        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
-            a.points < b.points ? 1 : -1
-        );
-
-        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false);
-        this.createStartAgain();
-    };
-
     this.createStartAgain = () => {
         startAgainButtonElement = document.createElement('button');
 
@@ -489,6 +485,20 @@ const GameEngine = function() {
         });
 
         template.gameResultDivElement.appendChild(startAgainButtonElement);
+    };
+
+    this.finishGame = () => {
+        storage.finishGame(this.getnow());
+
+        template.gameAreaDivElement.classList.add('d-none');
+        template.gameResultDivElement.classList.remove('d-none');
+
+        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
+            a.points < b.points ? 1 : -1
+        );
+
+        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false, false, true);
+        this.createStartAgain();
     };
 
     this.init();
