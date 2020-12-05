@@ -41,8 +41,10 @@ var Rank = function() {
 
     const createCompetitionRank = (gameLevel) => {
         const headerElement = document.createElement('h2');
+        const emptyRankElement = document.createElement('h2');
 
         headerElement.innerHTML = gameLevel[0].toUpperCase() + gameLevel.slice(1) + ' ' + 'Competition Rank';
+        emptyRankElement.innerHTML = 'No ' + gameLevel + ' results found yet!';
 
         const tableElement = document.createElement('table');
         const tableElementTr = document.createElement('tr');
@@ -61,13 +63,17 @@ var Rank = function() {
         tableElement.appendChild(tableElementTr);
 
         template.gameRankElement.appendChild(headerElement);
+        template.gameRankElement.appendChild(emptyRankElement);
 
         const rankedPlayers = calculateCompetitionRankPlayers(gameLevel);
 
         if(rankedPlayers.length === 0) {
             headerElement.classList.add('d-none');
+            tableElement.classList.add('d-none');
         } else {
             headerElement.classList.remove('d-none');
+            tableElement.classList.remove('d-none');
+            emptyRankElement.classList.add('d-none');
 
             rankedPlayers.slice(0, 10).forEach((player) => {
                 const tr = document.createElement('tr');
@@ -89,8 +95,10 @@ var Rank = function() {
 
     const createMultiPlayerResultList = () => {
         const headerElement = document.createElement('h2');
+        const emptyRankElement = document.createElement('h2');
 
-        headerElement.innerHTML = 'Multiplayer Games';
+        headerElement.innerHTML = 'Multiplayer Winner List';
+        emptyRankElement.innerHTML = 'No multiplayer results found yet!';
 
         const tableElement = document.createElement('table');
         const tableElementTr = document.createElement('tr');
@@ -109,28 +117,38 @@ var Rank = function() {
         tableElementTr.appendChild(tableElementTh2);
         tableElementTr.appendChild(tableElementTh3);
 
-        tableElement.appendChild(tableElementTr);
+        tableElement.appendChild(tableElementTr);     
 
         template.gameRankElement.appendChild(headerElement);
+        template.gameRankElement.appendChild(emptyRankElement);
 
         const winnerPlayers = calculateMultiPlayerGameWinnerPlayers();
 
-        winnerPlayers.slice(0, 10).forEach((player) => {
-            const tr = document.createElement('tr');
-            const td1 = document.createElement('td');
-            const td2 = document.createElement('td');
-            const td3 = document.createElement('td');
+        if(winnerPlayers.length === 0) {
+            headerElement.classList.add('d-none');
+            tableElement.classList.add('d-none');
+        } else {
+            headerElement.classList.remove('d-none');
+            tableElement.classList.remove('d-none');
+            emptyRankElement.classList.add('d-none');
 
-            td1.innerHTML = player.playerName;
-            td2.innerHTML = player.attempts;
-            td3.innerHTML = player.points;
+            winnerPlayers.slice(0, 10).forEach((player) => {
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
 
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
+                td1.innerHTML = player.playerName;
+                td2.innerHTML = player.attempts;
+                td3.innerHTML = player.points;
 
-            tableElement.appendChild(tr);
-        });
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+
+                tableElement.appendChild(tr);
+            });
+        }
 
         template.gameRankElement.appendChild(tableElement);
     };

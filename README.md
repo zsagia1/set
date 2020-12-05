@@ -40,8 +40,8 @@ Az alap feladatok (14 pont)
 - [X] "Plusz 3 lap" gomb a beállításoknak megfelelően megjelenik és helyesen működik (1 pont)
 - [X] "Plusz 3 lap" adása automatikusan megtörténik, ha nincs SET (1 pont)
 - [X] Játék közben és végén a pontszám megjelenítése (0,5 pont)
-- [ ] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont) //teszteles szukseges
-- [] Igényes kialakítás (1 pont)
+- [X] Nincs nagyobb programhiba, nem csalhatók elő furcsa jelenségek (0,5 pont)
+- [X] Igényes kialakítás (1 pont)
 
 Plusz feladatok (plusz 5 pont)
 

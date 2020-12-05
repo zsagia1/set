@@ -446,7 +446,7 @@ const GameEngine = function() {
                     currentSelectedSetCardElements.forEach((setCardElement) => {
                         return setCardElement.querySelector('img').classList.toggle('selected')
                     });
-                }, 3000);
+                }, 1000);
             }
         });
     };
