@@ -7,8 +7,9 @@ var Storage = function() {
         history.item.push(historyItem);
     };
 
-    this.finishGame = (endTime) => {
+    this.finishGame = (endTime, players) => {
         history.endTime = endTime;
+        history.players = players;
 
         const histories = this.read(HISTORIES) || [];
 

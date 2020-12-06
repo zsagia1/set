@@ -1,3 +1,7 @@
+body {
+    background-color: #5a7883;
+}
+
 .card-number {
     font-size: x-large;
     font-weight: 700;
@@ -9,7 +13,41 @@
 }
 
 .container {
+    position: relative;
     padding: 0;
+    color: white;
+}
+
+.deck .game-card {
+    border: 1px solid #fff;
+    border-radius: 6px;
+    background-color: #06668a;
+    height: 168px;
+    width: 110px;
+}
+
+.deck .game-card.first {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.deck .game-card.second {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+}
+
+.deck .game-card.third {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    text-align: center;
+}
+
+.deck .game-card.third span {
+    margin-top: -20px;
+    margin-left: -20px;
 }
 
 .game-area-header {
@@ -33,6 +71,32 @@
     border: 4px solid red;
 }
 
+.game-rule-container {
+    text-align: center;
+    font-size: large;   
+    background-color: #272822;
+    border-radius: 30px;
+}
+
+.game-title-container {
+    background-color: #06668a;
+}
+
+h1 {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+h2 {
+    background-color: #06668a;
+    border-color: #007bff;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 30px;
+}
+
 .player {
     cursor: pointer;
 }
@@ -42,30 +106,9 @@
 }
 
 .player.selected {
-    background-color: darkgray;
+    background-color: #06668a;
 }
 
-.deck .game-card {
-    border: 1px solid #000;
-    border-radius: 6px;
-    height: 168px;
-    width: 110px;
-}
-
-.deck .game-card.first {
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.deck .game-card.second {
-    position: absolute;
-    left: 15px;
-    top: 15px;
-}
-
-.deck .game-card.third {
-    position: absolute;
-    left: 30px;
-    top: 30px;
+#gamePlayersTitle {
+    text-align: center;
 }

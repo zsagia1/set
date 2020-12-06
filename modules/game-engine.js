@@ -5,6 +5,7 @@ const GameEngine = function() {
     let cardsOnBoard            = null;
     let currentCheckInterval    = null;
     let currentSets             = [];
+    let failedPlayerContainers   = [];
     let gameLevel               = null;
     let gameMode                = null;
     let isAutoSupplementButton  = false;
@@ -14,6 +15,7 @@ const GameEngine = function() {
     let selectedCards           = [];
     let selectedPlayerContainer = null;
     let timeForCheck            = null;
+    this.config = null;
 
 
     this.init = () => {
@@ -24,11 +26,12 @@ const GameEngine = function() {
     };
 
     this.startGame = (config) => {
-        gameMode    = config.gameMode;
-        gameLevel   = config.gameLevel;
-        timeForCheck = config.timeForCheck;
-        isAutoSupplementButton = config.isAutoSupplementButton;
-        isSingleMode = config.playerNames.length === 1;
+        gameMode                = config.gameMode;
+        gameLevel               = config.gameLevel;
+        timeForCheck            = config.timeForCheck;
+        isAutoSupplementButton  = config.isAutoSupplementButton;
+        isSingleMode            = config.playerNames.length === 1;
+        this.config             = config
 
         createCheckButtonElement();
         
@@ -36,7 +39,7 @@ const GameEngine = function() {
 
         createGamePlayers(config.playerNames, template.gamePlayersContainer, isSingleMode);
 
-        if(isSingleMode == true) {
+        if(isSingleMode === true) {
             selectPlayer(0);
         }
 
@@ -106,41 +109,53 @@ const GameEngine = function() {
 
         players.forEach((player) => playersMap.set(player.name, player));
 
-        createGamePlayerList(players, container, true, isSingleMode);
+        createGamePlayerList(players, container, true, isSingleMode, false);
     };
 
-    const createGamePlayerList = (players, container, isAction, isSingleMode) => {
+    const createGamePlayerList = (players, container, isAction, isSingleMode, isEnded) => {
         const playerElements = [];
 
-        players.forEach((player) => {
+        players.forEach((player, index) => {
             const playerContainer = document.createElement('div');
 
             playerContainer.classList.add('row');
             playerContainer.classList.add('player');
             playerContainer.setAttribute('data-player', JSON.stringify(player));
 
-            if(isAction == true && !isSingleMode) {
+            if(isAction === true && !isSingleMode) {
                 playerContainer.addEventListener('click', (event) => {
-                    clearCheckInterval();
+                    if (selectedCards.length === 0 && !failedPlayerContainers.includes(playerContainer)) {
+                        clearCheckInterval();
 
-                    selectedPlayerContainer = playerContainer;
-
-                    playerElements.forEach((playerElement) => {
-                        playerElement.classList.remove('selected');
-                    });
-
-                    playerContainer.classList.add('selected');
-
-                    currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
+                        selectedPlayerContainer = playerContainer;
+    
+                        playerElements.forEach((playerElement) => {
+                            playerElement.classList.remove('selected');
+                        });
+    
+                        playerContainer.classList.add('selected');
+    
+                        currentCheckInterval = setCheckingCountdown(1000, timeForCheck);
+                    }
                 });
             }
 
-            playerContainer.innerHTML = 
+            if(isEnded === true) {
+                playerContainer.innerHTML = 
+                '<div class="col-sm-1 index">'      + (index + 1) + '.' + '</div>' +
+                '<div class="col-sm-3 name">'       + player.name       + '</div>' +
+                '<div class="col-sm-2 attempts">'   + player.attempts   + '</div>' +
+                '<div class="col-sm-2 corrects">'   + player.corrects   + '</div>' +
+                '<div class="col-sm-2 fails">'      + player.fails      + '</div>' +
+                '<div class="col-sm-2 points">'     + player.points     + '</div>';
+            } else {
+                playerContainer.innerHTML = 
                 '<div class="col-sm-4 name">'       + player.name       + '</div>' +
                 '<div class="col-sm-2 attempts">'   + player.attempts   + '</div>' +
                 '<div class="col-sm-2 corrects">'   + player.corrects   + '</div>' +
                 '<div class="col-sm-2 fails">'      + player.fails      + '</div>' +
                 '<div class="col-sm-2 points">'     + player.points     + '</div>';
+            }
 
             playerElements.push(playerContainer);
 
@@ -152,15 +167,15 @@ const GameEngine = function() {
 
         template.createHeaderButtons(isSetButton, isWhereSetButton, isAutoSupplementButton);
 
-        if(isSetButton == true) {
+        if(isSetButton === true) {
             setClickEventOnIsSetButton();
         }
 
-        if(isWhereSetButton == true) {
+        if(isWhereSetButton === true) {
             setClickEventOnIsWhereSetButton();
         }
 
-        if(isAutoSupplementButton == true) {
+        if(isAutoSupplementButton === true) {
             template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
 
             template.isAutoSupplementButtonElement.addEventListener('click', (event) => {
@@ -188,7 +203,7 @@ const GameEngine = function() {
 
         Array.from(cardsMap.values()).forEach((cards) => {
 
-            if(checkSetOnCards(cards) == true) {
+            if(checkSetOnCards(cards) === true) {
                 correctSets.push(cards);
             }
         });
@@ -225,16 +240,24 @@ const GameEngine = function() {
     const handleCheckAction = (isSet) => {
         maintainPlayer(selectedPlayerContainer, isSet);
 
-        if(isSet == true) {
+        if(isSet === true) {
             selectedCards.forEach((card) => {
                 cardsOnBoard = cardsOnBoard.filter(
                     (cardOnBoard) => cardOnBoard !== card
                 );
             });
 
-            console.log(cardsOnBoard);
+            if(cardsOnBoard.length < 12) {
+                cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            }
 
-            cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            failedPlayerContainers = [];
+        } else if(!isSingleMode) {
+            failedPlayerContainers.push(selectedPlayerContainer);
+        }
+
+        if(failedPlayerContainers.length === players.length) {
+            failedPlayerContainers = [];
         }
 
         storage.addHistoryItem(
@@ -250,7 +273,7 @@ const GameEngine = function() {
 
         if(currentSets.length === 0 && this.deck.getDeckSize() === 0) {
             this.finishGame();
-        } else if(currentSets.length === 0 && isAutoSupplementButton == true) {
+        } else if(currentSets.length === 0 && isAutoSupplementButton === true) {
             template.isAutoSupplementButtonElement.removeAttribute('disabled');
         }
     };
@@ -260,6 +283,13 @@ const GameEngine = function() {
 
         while(currentSets.length === 0 && !isAutoSupplementButton && this.deck.getDeckSize() > 0) {
             cardsOnBoard = [...cardsOnBoard, ...this.deck.handOutDeck(3)];
+            currentSets = findSet(generateThreeCardsArray(Array.from(cardsOnBoard)));
+        }
+
+        if(currentSets.length > 0 && 
+            isAutoSupplementButton === true && 
+            template.isAutoSupplementButtonElement.disabled == false) {
+                template.isAutoSupplementButtonElement.setAttribute('disabled', 'disabled');
         }
 
         template.gameAreaContainer.innerHTML = "";
@@ -310,7 +340,7 @@ const GameEngine = function() {
 
         player.attempts = player.attempts + 1;
 
-        if(isSet == true) {
+        if(isSet === true) {
             player.corrects = player.corrects + 1;
             player.points   = player.points + 1;
         } else {
@@ -330,7 +360,7 @@ const GameEngine = function() {
 
     const registerKeyUpEvent = () => {
         document.addEventListener('keyup', (event) => {
-            if(event.altKey == true) {
+            if(event.altKey === true) {
                 const index = event.code.replace('Numpad', '');
 
                 Array.from(template.gamePlayersContainer.children).forEach((playerElement) => {
@@ -384,7 +414,7 @@ const GameEngine = function() {
 
     const setClickEventOnIsWhereSetButton = () => {
         template.isWhereSetButtonElement.addEventListener('click', (event) => {
-            if(currentSets === 0) {
+            if(currentSets.length === 0) {
                 let whereSetContainer = document.createElement('div');
 
                 whereSetContainer.classList.add('is-where-set');
@@ -416,7 +446,7 @@ const GameEngine = function() {
                     currentSelectedSetCardElements.forEach((setCardElement) => {
                         return setCardElement.querySelector('img').classList.toggle('selected')
                     });
-                }, 3000);
+                }, 1000);
             }
         });
     };
@@ -433,17 +463,48 @@ const GameEngine = function() {
         }, time);
     };
 
+    this.createStartAgain = () => {
+        startAgainButtonElement = document.createElement('button');
+
+        startAgainButtonElement.innerHTML = 'Start Again';
+        startAgainButtonElement.classList.add('btn');
+        startAgainButtonElement.classList.add('btn-primary');
+        startAgainButtonElement.classList.add('mr-1');
+
+        startAgainButtonElement.addEventListener('click', (event) => {
+            template.gameResultDivElement.innerHTML = '';
+            template.gamePlayersContainer.innerHTML = '';
+            template.gameAreaHeaderElement.innerHTML = '';
+
+            this.init();
+    
+            template.gameAreaDivElement.classList.remove('d-none');
+            template.gameResultDivElement.classList.add('d-none');
+
+            this.startGame(this.config);
+        });
+
+        template.gameResultDivElement.appendChild(startAgainButtonElement);
+    };
+
     this.finishGame = () => {
-        storage.finishGame(this.getnow());
+        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) => {
+            if(a.points < b.points) {
+                return 1;
+            } else if(a.points > b.points) {
+                return -1;
+            } else {
+                return a.fails > b.fails ? 1 : -1
+            }
+        });
+
+        storage.finishGame(this.getnow(), sortedPlayers);
 
         template.gameAreaDivElement.classList.add('d-none');
         template.gameResultDivElement.classList.remove('d-none');
 
-        const sortedPlayers = Array.from(playersMap.values()).sort((a, b) =>
-            a.points < b.points ? 1 : -1
-        );
-
-        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false);
+        createGamePlayerList(sortedPlayers, template.gameResultDivElement, false, false, true);
+        this.createStartAgain();
     };
 
     this.init();

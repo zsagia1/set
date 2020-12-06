@@ -52,7 +52,7 @@ const Template = function() {
     };
 
     this.createHeaderButtons = (isSetButton, isWhereSetButton, isAutoSupplementButton) => {
-        if(isSetButton == true) {
+        if(isSetButton === true) {
             this.isSetButtonElement = document.createElement('button');
 
             this.isSetButtonElement.innerHTML = 'Is there Set?';
@@ -64,7 +64,7 @@ const Template = function() {
             this.gameAreaHeaderElement.appendChild(this.isSetButtonElement);
         }
 
-        if(isWhereSetButton == true) {
+        if(isWhereSetButton === true) {
             this.isWhereSetButtonElement = document.createElement('button');
 
             this.isWhereSetButtonElement.innerHTML = 'Where is the Set?';
@@ -76,7 +76,7 @@ const Template = function() {
             this.gameAreaHeaderElement.appendChild(this.isWhereSetButtonElement);
         }
 
-        if(isAutoSupplementButton == true) {
+        if(isAutoSupplementButton === true) {
             this.isAutoSupplementButtonElement = document.createElement('button');
 
             this.isAutoSupplementButtonElement.innerHTML = 'Supplement';
